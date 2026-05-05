@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sq" class="dark">
+<html lang="sq">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -14,7 +14,6 @@
     <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -24,8 +23,8 @@
                         lika: {
                             red: '#e30613',
                             darkred: '#b3040f',
-                            black: '#121212',
-                            gray: '#2a2a2a'
+                            black: '#333333',
+                            gray: '#999999'
                         }
                     },
                     animation: {
@@ -71,11 +70,10 @@
         }
 
         body {
-            background-color: #0a0a0a;
-            color: #ffffff;
+            background-color: #f8fafc;
+            color: #333333;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
-            /* Hide scrollbar for seamless mobile look */
             -ms-overflow-style: none;  
             scrollbar-width: none;  
         }
@@ -83,7 +81,7 @@
             display: none; 
         }
 
-        /* Ambient Glow */
+        /* Ambient Glow (Light mode version) */
         .ambient-glow {
             position: fixed;
             top: -10%;
@@ -91,7 +89,7 @@
             transform: translateX(-50%);
             width: 150vw;
             height: 50vh;
-            background: radial-gradient(circle, rgba(227,6,19,0.15) 0%, rgba(10,10,10,0) 70%);
+            background: radial-gradient(circle, rgba(227,6,19,0.05) 0%, rgba(248,250,252,0) 70%);
             z-index: 0;
             pointer-events: none;
         }
@@ -113,21 +111,20 @@
         .delay-4 { animation-delay: 0.4s; }
         .delay-5 { animation-delay: 0.5s; }
         .delay-6 { animation-delay: 0.6s; }
-        .delay-7 { animation-delay: 0.7s; }
 
-        /* Premium Glass Button */
+        /* Premium Light Button */
         .glass-btn {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
         }
         
         .glass-btn:active {
             transform: scale(0.97);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.05);
         }
 
         /* Shimmer gradient for Primary Action */
@@ -135,6 +132,25 @@
             background: linear-gradient(90deg, #e30613 0%, #ff4b55 25%, #e30613 50%, #b3040f 75%, #e30613 100%);
             background-size: 200% auto;
         }
+
+        /* Brand Colors for Socials */
+        .social-fb { background-color: #1877F2; color: white; }
+        .social-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+        .social-tt { background-color: #000000; color: white; }
+        .social-mail { background-color: #ffffff; border: 1px solid #e2e8f0; color: #e30613; }
+        
+        /* Interactive Offer Accordion */
+        #offers-content {
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #offers-content.open {
+            max-height: 1000px; /* arbitrary large number */
+            opacity: 1;
+        }
+        .offer-item:active { background-color: #f8fafc; }
     </style>
 </head>
 <body class="antialiased selection:bg-lika-red selection:text-white relative min-h-[100dvh]">
@@ -146,104 +162,153 @@
     <main class="relative z-10 max-w-md mx-auto px-6 py-12 flex flex-col items-center min-h-[100dvh]">
         
         <!-- Profile Header -->
-        <div class="flex flex-col items-center mb-8 animate-entrance delay-1 w-full">
-            <!-- Icon/Avatar Wrapper with Glow -->
-            <div class="relative mb-5 group">
-                <div class="absolute inset-0 bg-lika-red rounded-full blur-xl opacity-40"></div>
-                <div class="relative w-24 h-24 bg-[#121212] border border-white/10 rounded-full flex items-center justify-center shadow-2xl p-4">
-                    <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/LOGO/LOGO%20FOR%20ICO_NQJVNaDcTU.ico?updatedAt=null&ik-s=c06b8340b783740efa43080e3025797fdae9cc8d" alt="LIKA Shield" class="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+        <div class="flex flex-col items-center mb-10 animate-entrance delay-1 w-full">
+            <!-- Icon/Avatar Wrapper with Soft Glow -->
+            <div class="relative mb-6 group">
+                <div class="absolute inset-0 bg-lika-red rounded-full blur-xl opacity-20"></div>
+                <div class="relative w-[104px] h-[104px] bg-white border border-gray-100 rounded-full flex items-center justify-center shadow-lg p-4">
+                    <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/LOGO/LOGO%20FOR%20ICO_NQJVNaDcTU.ico?updatedAt=null&ik-s=c06b8340b783740efa43080e3025797fdae9cc8d" alt="LIKA Shield" class="w-full h-full object-contain">
                 </div>
             </div>
 
-            <!-- Main Logo -->
-            <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/LOGO/For%20website/Horziontal%20TEXT%20ONLY%20(for%20DARK%20Background)_SC7NxhJ_0.png?updatedAt=null&ik-s=d789fa2488cf1a37127e4b3f1968868e9a801444" alt="LIKAsecurity" class="h-6 w-auto object-contain mb-3">
+            <!-- Main Logo (Light Background Version) -->
+            <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/LOGO/For%20website/Horziontal%20TEXT%20ONLY%20(for%20LIGHT%20Background)_JfyjkpHwA.png?updatedAt=null&ik-s=845ed1fc7745a77049906aa9dca569b49f3c59a8" alt="LIKAsecurity" class="h-6 w-auto object-contain mb-3">
             
             <!-- Bio / Tagline -->
-            <p class="text-white/60 text-sm font-medium tracking-wide text-center uppercase">
+            <p class="text-gray-500 text-[13px] font-bold tracking-wide text-center uppercase">
                 Zgjidhje Profesionale të Sigurisë
             </p>
         </div>
 
         <!-- Links Container -->
-        <div class="w-full flex flex-col gap-3.5 mb-10">
+        <div class="w-full flex flex-col gap-4 mb-12">
 
             <!-- Primary Action: Call Now -->
-            <a href="tel:+38349585195" class="animate-entrance delay-2 w-full p-[1px] rounded-2xl shimmer-bg animate-shimmer shadow-[0_0_30px_-10px_rgba(227,6,19,0.6)] active:scale-95 transition-transform">
-                <div class="flex items-center w-full bg-[#121212]/80 backdrop-blur-md rounded-[15px] p-4 group">
-                    <div class="bg-white text-lika-red p-2.5 rounded-xl mr-4 flex-shrink-0">
+            <a href="tel:+38349585195" class="animate-entrance delay-2 w-full p-[1px] rounded-[18px] shimmer-bg animate-shimmer shadow-[0_10px_30px_-10px_rgba(227,6,19,0.5)] active:scale-95 transition-transform">
+                <div class="flex items-center w-full bg-lika-red/95 backdrop-blur-md rounded-[17px] p-4 group">
+                    <div class="bg-white text-lika-red p-2.5 rounded-xl mr-4 flex-shrink-0 shadow-sm">
                         <i data-lucide="phone-call" class="w-5 h-5 animate-ring"></i>
                     </div>
                     <div class="flex flex-col">
                         <span class="text-white font-bold text-sm tracking-wide uppercase">Thirr Tani</span>
-                        <span class="text-white/70 text-xs mt-0.5">+383 49 585 195</span>
+                        <span class="text-white/90 text-xs mt-0.5 font-medium">+383 49 585 195</span>
                     </div>
-                    <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/40 ml-auto group-hover:text-white transition-colors"></i>
+                    <i data-lucide="arrow-up-right" class="w-5 h-5 text-white/70 ml-auto group-hover:text-white transition-colors"></i>
                 </div>
             </a>
 
             <!-- Secondary Link: Website -->
-            <a href="https://www.likasecurity.com" target="_blank" class="animate-entrance delay-3 glass-btn w-full flex items-center p-4 rounded-2xl group transition-all">
-                <div class="bg-white/5 border border-white/10 p-2.5 rounded-xl text-white/90 mr-4 flex-shrink-0 group-hover:bg-white/10 transition-colors">
+            <a href="https://www.likasecurity.com" target="_blank" class="animate-entrance delay-3 glass-btn w-full flex items-center p-4 rounded-[18px] group">
+                <div class="bg-gray-50 border border-gray-100 p-3 rounded-xl text-lika-red mr-4 flex-shrink-0">
                     <i data-lucide="globe" class="w-5 h-5"></i>
                 </div>
-                <span class="text-white font-bold text-sm tracking-wide">Faqja Zyrtare</span>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-white/30 ml-auto group-hover:text-white group-hover:translate-x-1 transition-all"></i>
-            </a>
-
-            <!-- Secondary Link: Offers -->
-            <a href="https://www.likasecurity.com/index.html#offers" target="_blank" class="animate-entrance delay-4 glass-btn w-full flex items-center p-4 rounded-2xl group transition-all">
-                <div class="bg-white/5 border border-white/10 p-2.5 rounded-xl text-white/90 mr-4 flex-shrink-0 group-hover:bg-white/10 transition-colors">
-                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                </div>
                 <div class="flex flex-col">
-                    <span class="text-white font-bold text-sm tracking-wide">Ofertat & Pakot</span>
-                    <span class="text-white/50 text-[10px] mt-0.5 uppercase tracking-wider">Kamera & Alarme</span>
+                    <span class="text-gray-900 font-bold text-sm tracking-wide">Faqja Zyrtare</span>
+                    <span class="text-gray-500 text-xs mt-0.5 font-medium">www.likasecurity.com</span>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-white/30 ml-auto group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 ml-auto group-hover:text-lika-red group-hover:translate-x-1 transition-all"></i>
             </a>
 
-            <!-- Secondary Link: Service -->
-            <a href="https://service.likaapps.com/" target="_blank" class="animate-entrance delay-5 glass-btn w-full flex items-center p-4 rounded-2xl group transition-all">
-                <div class="bg-white/5 border border-white/10 p-2.5 rounded-xl text-white/90 mr-4 flex-shrink-0 group-hover:bg-white/10 transition-colors">
-                    <i data-lucide="wrench" class="w-5 h-5"></i>
+            <!-- Expandable Offers Section -->
+            <div class="animate-entrance delay-4 glass-btn w-full rounded-[18px] overflow-hidden flex flex-col">
+                <button onclick="toggleOffers()" class="w-full flex items-center p-4 focus:outline-none group">
+                    <div class="bg-gray-50 border border-gray-100 p-3 rounded-xl text-lika-red mr-4 flex-shrink-0">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    </div>
+                    <div class="flex flex-col text-left">
+                        <span class="text-gray-900 font-bold text-sm tracking-wide">Ofertat & Pakot</span>
+                        <span class="text-gray-500 text-[10px] mt-0.5 uppercase tracking-wider font-bold">Shiko ofertat tona kryesore</span>
+                    </div>
+                    <i data-lucide="chevron-down" id="offers-chevron" class="w-4 h-4 text-gray-400 ml-auto transition-transform duration-300"></i>
+                </button>
+                
+                <!-- Expanded Content (Hidden by default) -->
+                <div id="offers-content" class="flex-col px-4 pb-4 gap-3 bg-white">
+                    <div class="h-px w-full bg-gray-100 mb-2"></div>
+                    
+                    <!-- Offer 1 -->
+                    <a href="https://www.likasecurity.com/index.html#offers" target="_blank" class="offer-item flex items-center gap-3 p-2 rounded-xl border border-transparent hover:border-gray-100 transition-colors">
+                        <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/OFERTA/Ezviz/Ezviz%20149.99_Pq9tfFVeG.jpg?updatedAt=null&ik-s=b945759cdcd0098b6a1a998f815b228bc6bfff4f" alt="Ezviz 2K" class="w-16 h-16 rounded-lg object-cover bg-gray-50 border border-gray-100 shrink-0">
+                        <div class="flex flex-col flex-grow justify-center">
+                            <span class="text-sm font-bold text-gray-900">Kamera WiFi 2K</span>
+                            <span class="text-[11px] text-gray-500 font-medium line-clamp-1 mt-0.5">Rrotullim 360° & Pamje Natën</span>
+                            <span class="text-sm font-bold text-lika-red mt-1">119.99€</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-gray-300 shrink-0"></i>
+                    </a>
+
+                    <!-- Offer 2 -->
+                    <a href="https://www.likasecurity.com/index.html#offers" target="_blank" class="offer-item flex items-center gap-3 p-2 rounded-xl border border-transparent hover:border-gray-100 transition-colors">
+                        <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/OFERTA/Camera/450%20hilook_lk8JkbrJC.jpg?updatedAt=null&ik-s=bb8a04a1eaf4689e22e2bb654174f297d4e732f6" alt="HiLook Standard" class="w-16 h-16 rounded-lg object-cover bg-gray-50 border border-gray-100 shrink-0">
+                        <div class="flex flex-col flex-grow justify-center">
+                            <span class="text-sm font-bold text-gray-900">HiLook Standard (4 Kamera)</span>
+                            <span class="text-[11px] text-gray-500 font-medium line-clamp-1 mt-0.5">Pamje e Qartë FHD 1080P</span>
+                            <span class="text-sm font-bold text-lika-red mt-1">450€</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-gray-300 shrink-0"></i>
+                    </a>
+
+                    <!-- Offer 3 -->
+                    <a href="https://www.likasecurity.com/index.html#offers" target="_blank" class="offer-item flex items-center gap-3 p-2 rounded-xl border border-transparent hover:border-gray-100 transition-colors">
+                        <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/OFERTA/Alaram/500%20alarm%202_3J6-3oSYT.jpg?updatedAt=null&ik-s=5456611b61d41e154341baa05c70df330f669efd" alt="Alarm WiFi" class="w-16 h-16 rounded-lg object-cover bg-gray-50 border border-gray-100 shrink-0">
+                        <div class="flex flex-col flex-grow justify-center">
+                            <span class="text-sm font-bold text-gray-900">Sistem Alarmi WiFi</span>
+                            <span class="text-[11px] text-gray-500 font-medium line-clamp-1 mt-0.5">Lidhje Wireless Pa Kabllo</span>
+                            <span class="text-sm font-bold text-lika-red mt-1">500€</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-gray-300 shrink-0"></i>
+                    </a>
+
+                    <!-- Offer 4 -->
+                    <a href="https://www.likasecurity.com/index.html#offers" target="_blank" class="offer-item flex items-center gap-3 p-2 rounded-xl border border-transparent hover:border-gray-100 transition-colors">
+                        <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/OFERTA/intercom%20video/Zile%20%20copy@3x_1q778sg8n_KnSOTGdK-.jpg?updatedAt=null&ik-s=287423cece4663b2d0829eb58094cc86a8e8ab5a" alt="Video Interfon" class="w-16 h-16 rounded-lg object-cover bg-gray-50 border border-gray-100 shrink-0">
+                        <div class="flex flex-col flex-grow justify-center">
+                            <span class="text-sm font-bold text-gray-900">Video Interfon (1 Monitor)</span>
+                            <span class="text-[11px] text-gray-500 font-medium line-clamp-1 mt-0.5">Video HD & Audio Dy-drejtimësh</span>
+                            <span class="text-sm font-bold text-lika-red mt-1">299.99€</span>
+                        </div>
+                        <i data-lucide="arrow-right" class="w-4 h-4 text-gray-300 shrink-0"></i>
+                    </a>
+                    
+                    <a href="https://likasecurity.com" target="_blank" class="w-full mt-2 py-3 bg-gray-50 rounded-xl border border-gray-100 text-center text-sm font-bold text-gray-700 hover:bg-gray-100 hover:text-lika-red transition-colors flex justify-center items-center gap-2">
+                        Shiko të gjitha pakot <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
                 </div>
-                <span class="text-white font-bold text-sm tracking-wide">Servisim Pajisjesh</span>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-white/30 ml-auto group-hover:text-white group-hover:translate-x-1 transition-all"></i>
-            </a>
+            </div>
 
             <!-- Secondary Link: Maps -->
-            <a href="https://maps.app.goo.gl/YaNityrrY9hwSGRH7" target="_blank" class="animate-entrance delay-6 glass-btn w-full flex items-center p-4 rounded-2xl group transition-all">
-                <div class="bg-white/5 border border-white/10 p-2.5 rounded-xl text-white/90 mr-4 flex-shrink-0 group-hover:bg-white/10 transition-colors">
-                    <i data-lucide="map-pin" class="w-5 h-5 text-lika-red"></i>
+            <a href="https://maps.app.goo.gl/YaNityrrY9hwSGRH7" target="_blank" class="animate-entrance delay-5 glass-btn w-full flex items-center p-4 rounded-[18px] group">
+                <div class="bg-gray-50 border border-gray-100 p-3 rounded-xl text-lika-red mr-4 flex-shrink-0">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-white font-bold text-sm tracking-wide">Lokacioni Ynë</span>
-                    <span class="text-white/50 text-[10px] mt-0.5 uppercase tracking-wider">Fushë Kosovë, Rr. Dardania</span>
+                    <span class="text-gray-900 font-bold text-sm tracking-wide">Lokacioni Ynë</span>
+                    <span class="text-gray-500 text-xs mt-0.5 font-medium">Fushë Kosovë, Rr. Dardania</span>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-white/30 ml-auto group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 ml-auto group-hover:text-lika-red group-hover:translate-x-1 transition-all"></i>
             </a>
 
         </div>
 
-        <!-- Social Media Icons Row -->
-        <div class="w-full flex justify-center gap-4 mb-10 animate-entrance delay-7">
-            <a href="https://www.facebook.com/lika.security" target="_blank" class="glass-btn p-3.5 rounded-full text-white/70 hover:text-[#1877F2] transition-colors active:scale-90">
-                <svg fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" /></svg>
+        <!-- Prominent Social Media Icons Row -->
+        <div class="w-full flex justify-center gap-5 mb-10 animate-entrance delay-6">
+            <a href="https://www.facebook.com/lika.security" target="_blank" class="social-fb w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform" title="Facebook">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
             </a>
-            <a href="https://www.instagram.com/lika.security" target="_blank" class="glass-btn p-3.5 rounded-full text-white/70 hover:text-[#E4405F] transition-colors active:scale-90">
-                <svg fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            <a href="https://www.instagram.com/lika.security" target="_blank" class="social-ig w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform" title="Instagram">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-            <a href="https://www.tiktok.com/@lika.security" target="_blank" class="glass-btn p-3.5 rounded-full text-white/70 hover:text-white transition-colors active:scale-90">
-                <svg fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1-2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+            <a href="https://www.tiktok.com/@lika.security" target="_blank" class="social-tt w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform" title="TikTok">
+                <svg fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 2.23-.9 4.44-2.39 6.08-1.51 1.66-3.7 2.66-5.96 2.68-2.22.02-4.46-.94-5.99-2.58-1.49-1.59-2.36-3.76-2.35-5.98.02-2.18.91-4.32 2.39-5.9 1.48-1.59 3.65-2.58 5.86-2.6.02 1.34.02 2.68.01 4.02-1.07.03-2.17.43-2.95 1.18-.76.73-1.23 1.8-1.21 2.88.02 1.09.47 2.15 1.25 2.89.77.74 1.86 1.14 2.95 1.12 1.1-.03 2.16-.47 2.91-1.24.73-.75 1.16-1.8 1.15-2.88-.04-4.88-.02-9.76-.03-14.64h4.03z"/></svg>
             </a>
-            <a href="mailto:lika.security@proton.me" class="glass-btn p-3.5 rounded-full text-white/70 hover:text-lika-red transition-colors active:scale-90">
-                <i data-lucide="mail" class="w-5 h-5"></i>
+            <a href="mailto:lika.security@proton.me" class="social-mail w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform" title="Email">
+                <i data-lucide="mail" class="w-6 h-6"></i>
             </a>
         </div>
 
         <!-- Footer -->
-        <div class="mt-auto pt-6 animate-entrance delay-7">
-            <p class="text-white/30 text-[10px] uppercase tracking-widest font-bold">
+        <div class="mt-auto pt-6 animate-entrance delay-6">
+            <p class="text-gray-400 text-[10px] uppercase tracking-widest font-bold">
                 &copy; <span id="year"></span> LIKAsecurity
             </p>
         </div>
@@ -253,8 +318,25 @@
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
+        
         // Set dynamic year
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Toggle Offers Accordion
+        function toggleOffers() {
+            const content = document.getElementById('offers-content');
+            const chevron = document.getElementById('offers-chevron');
+            
+            if (content.classList.contains('open')) {
+                // Close
+                content.classList.remove('open');
+                chevron.classList.remove('rotate-180');
+            } else {
+                // Open
+                content.classList.add('open');
+                chevron.classList.add('rotate-180');
+            }
+        }
     </script>
 </body>
 </html>

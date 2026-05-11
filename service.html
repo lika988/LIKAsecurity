@@ -1,29 +1,64 @@
 <!DOCTYPE html>
-<html lang="sq">
+<html lang="sq" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Tags -->
     <title>LIKAservice | Servis Profesional & Specialist i Elektronikës</title>
+    <meta name="description" content="Zgjidhje profesionale për pajisjet tuaja elektronike. Specialist i mikrosoldering, riparimeve të avancuara të Apple, serverave DIY NAS dhe instalimeve softuerike.">
+    <meta name="keywords" content="servis, riparim, elektronike, mikrosoldering, apple, nas, server, formatizim, prishtine">
+    
+    <!-- Open Graph for Social Sharing -->
+    <meta property="og:title" content="LIKAservice | Servis Profesional Elektronik">
+    <meta property="og:description" content="Nga mikrosoldering te serverat DIY NAS – shërbime të specializuara me pajisje profesionale.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://via.placeholder.com/1200x630.png?text=LIKAservice"> <!-- Replace with real image URL -->
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration (for Dark Mode & Custom Colors) -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#ff0000',
+                            redHover: '#cc0000',
+                            dark: '#121212',
+                            darker: '#0a0a0a',
+                            light: '#fbfbfd'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS (Minimized, using Tailwind where possible) -->
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fbfbfd;
-            color: #1d1d1f;
-            scroll-behavior: smooth;
-        }
-        .text-gradient {
-            background: linear-gradient(to right, #000000, #ff0000);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .dark .glass {
+            background: rgba(10, 10, 10, 0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .accordion-content {
             max-height: 0;
@@ -34,7 +69,7 @@
         .accordion-content.active {
             max-height: 4000px;
             opacity: 1;
-            padding-bottom: 2rem;
+            padding-bottom: 1.5rem;
         }
         .fade-in {
             opacity: 0;
@@ -45,400 +80,364 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .btn-primary {
-            background-color: #ff0000;
-            color: white;
-            transition: all 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #cc0000;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.15);
-        }
-        .highlight-box {
-            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-            border-left: 4px solid #ff0000;
-        }
         
         /* Scrollbar styles */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1a1a1a; }
         ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #333; }
         ::-webkit-scrollbar-thumb:hover { background: #ff0000; }
     </style>
 </head>
-<body class="selection:bg-[#ff0000]/10 selection:text-[#ff0000]">
+<body class="bg-brand-light text-gray-900 dark:bg-brand-dark dark:text-gray-100 selection:bg-brand-red/20 selection:text-brand-red antialiased">
 
     <!-- NAVBAR -->
-    <nav class="fixed w-full z-50 top-0 glass border-b border-black/5">
+    <nav class="fixed w-full z-50 top-0 glass border-b border-black/5 dark:border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="flex items-center text-xl tracking-tighter">
-                <span class="font-extrabold text-[#ff0000]">LIKA</span>
-                <span class="font-light text-black">service</span>
+            <a href="#" class="flex items-center text-xl tracking-tighter" aria-label="Home">
+                <span class="font-extrabold text-brand-red">LIKA</span>
+                <span class="font-light text-gray-900 dark:text-white">service</span>
             </a>
 
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#services" class="text-sm font-medium text-black/70 hover:text-black transition-colors" data-key="nav.services">Shërbimet</a>
-                <a href="#pricing" class="text-sm font-medium text-black/70 hover:text-black transition-colors" data-key="nav.pricing">Çmimet</a>
-                <a href="#contact" class="text-sm font-medium text-black/70 hover:text-black transition-colors" data-key="nav.contact">Kontakt</a>
-                <div class="h-4 w-px bg-black/10 mx-2"></div>
-                <button onclick="toggleLanguage()" id="lang-toggle" class="text-xs font-bold text-black/50 hover:text-black">EN</button>
-                <a href="tel:+38349585195" class="btn-primary px-5 py-2 rounded-full text-sm font-semibold">
-                    <span data-key="hero.cta">Na Kontakto</span>
-                </a>
+            <div class="hidden md:flex items-center gap-6 lg:gap-8">
+                <a href="#services" class="text-sm font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors" data-key="nav.services">Shërbimet</a>
+                <a href="#pricing" class="text-sm font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors" data-key="nav.pricing">Çmimet</a>
+                <a href="#contact" class="text-sm font-medium text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white transition-colors" data-key="nav.contact">Kontakt</a>
+                
+                <div class="h-4 w-px bg-black/10 dark:bg-white/10 mx-1"></div>
+                
+                <!-- Language Toggle -->
+                <button onclick="toggleLanguage()" id="lang-toggle" class="text-xs font-bold text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors" aria-label="Toggle Language">EN</button>
+                
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleTheme()" id="theme-toggle" class="p-2 text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle Dark Mode">
+                    <!-- Sun/Moon icons will be injected by JS -->
+                </button>
+
+                <!-- CTA triggers Modal now -->
+                <button onclick="openModal()" class="bg-brand-red hover:bg-brand-redHover text-white px-5 py-2 rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand-red/20">
+                    <span data-key="hero.cta">Kërko Ofertë</span>
+                </button>
             </div>
 
-            <button onclick="toggleMobileMenu()" class="md:hidden text-black p-2">
+            <button onclick="toggleMobileMenu()" class="md:hidden text-black dark:text-white p-2" aria-label="Open Mobile Menu">
                 <svg id="menu-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
             </button>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white border-b border-black/5 px-6 py-8 flex flex-col gap-6 shadow-xl">
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-16 left-0 w-full bg-white dark:bg-brand-dark border-b border-black/5 dark:border-white/5 px-6 py-8 flex flex-col gap-6 shadow-xl">
             <a href="#services" onclick="toggleMobileMenu()" class="text-lg font-medium">Shërbimet</a>
             <a href="#pricing" onclick="toggleMobileMenu()" class="text-lg font-medium">Çmimet</a>
             <a href="#contact" onclick="toggleMobileMenu()" class="text-lg font-medium">Kontakt</a>
-            <a href="tel:+38349585195" class="btn-primary text-white px-5 py-4 rounded-xl text-center font-semibold">Thirr Tani</a>
+            
+            <div class="flex justify-between items-center pt-4 border-t border-gray-100 dark:border-gray-800">
+                <button onclick="toggleLanguage(); toggleMobileMenu()" class="font-bold text-gray-500 dark:text-gray-400">Gjuha: <span id="mobile-lang-span">EN</span></button>
+                <button onclick="toggleTheme(); toggleMobileMenu()" class="font-bold text-gray-500 dark:text-gray-400">Ndrysho Temën</button>
+            </div>
+            
+            <button onclick="openModal(); toggleMobileMenu()" class="bg-brand-red text-white px-5 py-4 rounded-xl text-center font-semibold mt-2">Kërko Ofertë</button>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section id="services" class="relative pt-40 pb-20 px-6 flex flex-col items-center justify-center text-center">
-        <div class="fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 text-black/60 text-xs font-bold mb-6 tracking-widest uppercase">
-            <span>Specialist i Riparimeve të Avancuara</span>
-        </div>
-        <h1 class="fade-in text-5xl md:text-7xl font-extrabold text-black tracking-tight leading-[1.05] mb-8 max-w-4xl" data-key="hero.headline_html">
-            Zgjidhje <span class="text-gradient">Profesionale</span><br>për pajisjet tuaja.
-        </h1>
-        <p class="fade-in text-lg md:text-xl text-black/50 mb-10 leading-relaxed max-w-2xl">
-            Nga mikrosoldering te serverat DIY NAS – shërbime të specializuara me pajisje profesionale dhe saktësi maksimale.
-        </p>
-        <div class="fade-in flex flex-col sm:flex-row gap-4">
-            <a href="tel:+38349585195" class="btn-primary px-10 py-4 rounded-full font-bold flex items-center justify-center gap-2">
-                <span>Rezervo Shërbimin</span>
-            </a>
-            <a href="#pricing" class="px-10 py-4 bg-black/5 text-black rounded-full font-bold hover:bg-black/10 transition-colors text-center">Lista e Çmimeve</a>
-        </div>
-    </section>
-
-    <!-- MAIN POLICY -->
-    <section class="px-6 py-10">
-        <div class="fade-in max-w-5xl mx-auto">
-            <div class="rounded-3xl bg-white border border-black/5 p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm">
-                <div class="w-14 h-14 rounded-2xl bg-[#ff0000]/10 flex items-center justify-center flex-shrink-0">
-                    <svg class="text-[#ff0000]" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold text-black mb-1">Diagnostikimi & Pagesa</h3>
-                    <p class="text-black/50"><strong>25€ Tarifa fillestare</strong> (e pakthyeshme) për çdo diagnostikim profesional. Pagesa e plotë e servisit kryhet vetëm pas përfundimit të riparimit.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRICING ACCORDION -->
-    <section id="pricing" class="pt-24 pb-12 px-6">
-        <div class="max-w-4xl mx-auto">
-            <div class="fade-in text-center mb-16">
-                <h2 class="text-4xl font-bold text-black mb-4" data-key="pricingHeading">Katalogu i Shërbimeve</h2>
-                <p class="text-black/50">I rregulluar sipas kategorive kryesore për lehtësi kërkimi.</p>
-            </div>
-            <div id="pricing-accordion" class="space-y-4">
-                <!-- Data will be injected here -->
-            </div>
-        </div>
-    </section>
-
-    <!-- SOFTWARE INSTALLATION PRICING -->
-    <section id="software" class="py-12 px-6">
-        <div class="max-w-4xl mx-auto">
-            <div class="fade-in text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-black mb-4" data-key="software.title">Instalime Profesionale të Softuerëve</h2>
-                <p class="text-black/50" data-key="software.desc">Tarifa standarde për shërbime profesionale të instalimit dhe aktivizimit të programeve (pa TVSH).</p>
+    <main>
+        <!-- HERO -->
+        <section id="services" class="relative pt-40 pb-20 px-6 flex flex-col items-center justify-center text-center">
+            <div class="fade-in inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 dark:bg-white/10 text-gray-700 dark:text-gray-300 text-xs font-bold mb-6 tracking-widest uppercase">
+                <span data-key="hero.badge">Specialist i Riparimeve të Avancuara</span>
             </div>
             
-            <div class="fade-in bg-white rounded-3xl border border-black/10 shadow-sm overflow-hidden">
-                <!-- Header -->
-                <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-5 md:p-6 bg-[#f8f8fa] border-b border-black/10 font-bold text-xs md:text-sm uppercase tracking-wider">
-                    <div class="text-left text-black/60 pl-2 md:pl-4">Programi</div>
-                    <div class="flex items-center justify-center gap-1 md:gap-2 text-black/80">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.951-1.801"/></svg>
-                        <span class="hidden sm:inline">Windows</span><span class="sm:hidden">Win</span>
+            <h1 class="fade-in text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-8 max-w-4xl" data-key="hero.headline_html">
+                Zgjidhje <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-brand-red dark:from-white dark:to-brand-red">Profesionale</span><br>për pajisjet tuaja.
+            </h1>
+            
+            <p class="fade-in text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-10 leading-relaxed max-w-2xl" data-key="hero.sub">
+                Nga mikrosoldering te serverat DIY NAS – shërbime të specializuara me pajisje profesionale dhe saktësi maksimale.
+            </p>
+            
+            <div class="fade-in flex flex-col sm:flex-row gap-4">
+                <button onclick="openModal()" class="bg-brand-red hover:bg-brand-redHover text-white px-10 py-4 rounded-full font-bold flex items-center justify-center gap-2 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-red/20">
+                    <span data-key="hero.primaryBtn">Rezervo Shërbimin</span>
+                </button>
+                <a href="#pricing" class="px-10 py-4 bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-white rounded-full font-bold hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-center" data-key="hero.secondaryBtn">
+                    Lista e Çmimeve
+                </a>
+            </div>
+        </section>
+
+        <!-- MAIN POLICY -->
+        <section class="px-6 py-10">
+            <div class="fade-in max-w-5xl mx-auto">
+                <div class="rounded-3xl bg-white dark:bg-brand-darker border border-gray-200 dark:border-white/10 p-8 flex flex-col md:flex-row items-center gap-6 shadow-sm transition-colors">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-red/10 flex items-center justify-center flex-shrink-0">
+                        <svg class="text-brand-red" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     </div>
-                    <div class="flex items-center justify-center gap-1 md:gap-2 text-black/80">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.82 3.59-.82 2.76 0 4.21 2.05 4.3 2.16-2.14 1.25-1.74 4.31.29 5.37-1.12 2.66-2.29 4.54-3.26 5.46zm-2.8-15.53c.69-.9 1.12-2.08.97-3.25-1.1.06-2.36.79-3.08 1.68-.61.76-1.15 1.95-.98 3.09 1.22.09 2.37-.62 3.09-1.52z"/></svg>
-                        MAC
+                    <div>
+                        <h2 class="text-xl font-bold mb-1" data-key="policy.title">Diagnostikimi & Pagesa</h2>
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed" data-key="policy.desc_html"><strong>25€ Tarifa fillestare</strong> (e pakthyeshme) për çdo diagnostikim profesional. Pagesa e plotë e servisit kryhet vetëm pas përfundimit të riparimit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING ACCORDION -->
+        <section id="pricing" class="pt-24 pb-12 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="fade-in text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4" data-key="pricingHeading">Katalogu i Shërbimeve</h2>
+                    <p class="text-gray-500 dark:text-gray-400" data-key="pricingSub">I rregulluar sipas kategorive kryesore për lehtësi kërkimi.</p>
+                </div>
+                <!-- Dynamic Accordion Content injected via JS -->
+                <div id="pricing-accordion" class="space-y-4"></div>
+            </div>
+        </section>
+
+        <!-- SOFTWARE INSTALLATION PRICING -->
+        <section id="software" class="py-12 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="fade-in text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4" data-key="software.title">Instalime Profesionale të Softuerëve</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mb-8" data-key="software.desc">Tarifa standarde për shërbime profesionale të instalimit dhe aktivizimit (pa TVSH).</p>
+                    
+                    <!-- Search/Filter Bar -->
+                    <div class="relative max-w-md mx-auto mb-8">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input type="text" id="software-search" oninput="filterSoftware()" placeholder="Kërko programin (psh. AutoCAD)..." 
+                            class="w-full pl-12 pr-4 py-3 bg-white dark:bg-brand-darker border border-gray-200 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900 dark:text-white transition-shadow shadow-sm">
                     </div>
                 </div>
                 
-                <!-- Body -->
-                <div class="divide-y divide-black/5 text-sm md:text-base">
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">V-Ray</div>
-                        <div class="text-center font-bold text-black/70">30€</div>
-                        <div class="text-center font-bold text-black/70">50€</div>
+                <div class="fade-in bg-white dark:bg-brand-darker rounded-3xl border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden transition-colors">
+                    <!-- Table Header -->
+                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-5 md:p-6 bg-gray-50 dark:bg-white/5 border-b border-gray-200 dark:border-white/10 font-bold text-xs md:text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <div class="text-left pl-2 md:pl-4" data-key="software.col1">Programi</div>
+                        <div class="flex items-center justify-center gap-1 md:gap-2">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.951-1.801"/></svg>
+                            <span class="hidden sm:inline">Windows</span><span class="sm:hidden">Win</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-1 md:gap-2">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.82 3.59-.82 2.76 0 4.21 2.05 4.3 2.16-2.14 1.25-1.74 4.31.29 5.37-1.12 2.66-2.29 4.54-3.26 5.46zm-2.8-15.53c.69-.9 1.12-2.08.97-3.25-1.1.06-2.36.79-3.08 1.68-.61.76-1.15 1.95-.98 3.09 1.22.09 2.37-.62 3.09-1.52z"/></svg>
+                            MAC
+                        </div>
                     </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Sketchup</div>
-                        <div class="text-center font-bold text-black/70">30€</div>
-                        <div class="text-center font-bold text-black/70">50€</div>
+                    
+                    <!-- Table Body (Rendered via JS) -->
+                    <div id="software-table-body" class="divide-y divide-gray-100 dark:divide-white/5 text-sm md:text-base">
+                        <!-- Data injected via JS -->
                     </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Rhinoceros 3D</div>
-                        <div class="text-center font-bold text-black/70">40€</div>
-                        <div class="text-center font-bold text-black/70">60€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Revit</div>
-                        <div class="text-center font-bold text-black/70">20€</div>
-                        <div class="text-center font-bold text-black/70">40€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">3DS MAX</div>
-                        <div class="text-center font-bold text-black/70">40€</div>
-                        <div class="text-center font-bold text-black/70">60€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Adobe Illustrator</div>
-                        <div class="text-center font-bold text-black/70">20€</div>
-                        <div class="text-center font-bold text-black/70">40€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">ArchiCad</div>
-                        <div class="text-center font-bold text-black/70">30€</div>
-                        <div class="text-center font-bold text-black/70">50€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">AutoCAD</div>
-                        <div class="text-center font-bold text-black/70">30€</div>
-                        <div class="text-center font-bold text-black/70">50€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Microsoft Office</div>
-                        <div class="text-center font-bold text-black/70">30€</div>
-                        <div class="text-center text-black/30">-</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Enscape</div>
-                        <div class="text-center font-bold text-black/70">20€</div>
-                        <div class="text-center font-bold text-black/70">50€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">InDesign</div>
-                        <div class="text-center font-bold text-black/70">30€</div>
-                        <div class="text-center font-bold text-black/70">50€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Lumion 12.5V</div>
-                        <div class="text-center font-bold text-black/70">20€</div>
-                        <div class="text-center font-bold text-black/70">40€</div>
-                    </div>
-                    <!-- Item -->
-                    <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-black/[0.01] transition-colors items-center">
-                        <div class="font-semibold text-black pl-2 md:pl-4">Adobe Photoshop</div>
-                        <div class="text-center font-bold text-black/70">20€</div>
-                        <div class="text-center font-bold text-black/70">40€</div>
+                    <!-- Empty state -->
+                    <div id="software-empty-state" class="hidden text-center py-8 text-gray-500 dark:text-gray-400">
+                        Nuk u gjet asnjë program. / No software found.
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="py-24 px-6 bg-white border-t border-black/5">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
-            <div class="fade-in">
-                <h2 class="text-3xl font-bold text-black mb-10">Na Kontaktoni</h2>
-                <div class="space-y-8">
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center flex-shrink-0 text-[#ff0000]">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <!-- CONTACT -->
+        <section id="contact" class="py-24 px-6 bg-white dark:bg-brand-darker border-t border-gray-100 dark:border-white/5 transition-colors">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
+                    <h2 class="text-3xl font-bold mb-10" data-key="contact.title">Na Kontaktoni</h2>
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-gray-100 dark:hover:border-white/10">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/10 flex items-center justify-center flex-shrink-0 text-brand-red">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">WhatsApp / Call</p>
+                                <a href="tel:+38349585195" class="text-xl font-semibold hover:text-brand-red transition-colors">+383 49 585 195</a>
+                            </div>
                         </div>
-                        <div>
-                            <p class="text-xs font-bold text-black/40 uppercase tracking-widest mb-1">WhatsApp / Call</p>
-                            <a href="tel:+38349585195" class="text-xl font-semibold text-black hover:text-[#ff0000] transition-colors">+383 49 585 195</a>
-                        </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <div class="w-10 h-10 rounded-xl bg-black/5 flex items-center justify-center flex-shrink-0 text-[#ff0000]">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-black/40 uppercase tracking-widest mb-1">Orari</p>
-                            <p class="text-xl font-semibold text-black">Hënë - Premte: 08:00 - 16:00</p>
+                        <div class="flex items-start gap-4 p-4 rounded-2xl border border-transparent">
+                            <div class="w-12 h-12 rounded-xl bg-gray-100 dark:bg-white/5 flex items-center justify-center flex-shrink-0 text-gray-600 dark:text-gray-300">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1" data-key="contact.hours">Orari</p>
+                                <p class="text-lg font-medium" data-key="contact.days">Hënë - Premte: 08:00 - 16:00</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <div class="fade-in bg-gray-50 dark:bg-brand-dark rounded-[2rem] p-10 text-center border border-gray-200 dark:border-white/5">
+                    <h3 class="text-2xl font-bold mb-4" data-key="contact.helpTitle">Nevojë për ndihmë?</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-8" data-key="contact.helpDesc">Për çdo pyetje rreth çmimeve apo shërbimeve specifike, kërkoni një ofertë direkt.</p>
+                    <button onclick="openModal()" class="w-full bg-brand-red hover:bg-brand-redHover text-white py-4 rounded-xl font-bold text-lg transition-colors">
+                        <span data-key="contact.helpBtn">Kërko Ofertë</span>
+                    </button>
+                </div>
             </div>
-            
-            <div class="fade-in bg-[#f5f5f7] rounded-[2rem] p-10 text-center border border-black/5">
-                <h3 class="text-2xl font-bold mb-4">Nevojë për ndihmë?</h3>
-                <p class="text-black/50 mb-8">Për çdo pyetje rreth çmimeve apo shërbimeve specifike, na shkruani në WhatsApp ose Viber.</p>
-                <a href="https://wa.me/38349585195" class="btn-primary block py-4 rounded-xl font-bold text-lg">Dërgo Mesazh</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- FOOTER -->
-    <footer class="py-12 text-center text-black/40 text-xs border-t border-black/5">
-        <p>&copy; <span id="year"></span> LIKAservice. Të gjitha të drejtat të rezervuara.</p>
+    <footer class="py-12 text-center text-gray-400 dark:text-gray-500 text-sm border-t border-gray-200 dark:border-white/5 transition-colors">
+        <p>&copy; <span id="year"></span> LIKAservice. <span data-key="footer.rights">Të gjitha të drejtat të rezervuara.</span></p>
     </footer>
 
     <!-- FLOATING CONTACT BUTTONS -->
-    <div class="fixed bottom-6 right-6 z-[9999] flex flex-col gap-3">
+    <div class="fixed bottom-6 right-6 z-[40] flex flex-col gap-3">
         <!-- Viber -->
-        <a href="viber://chat?number=+38349585195" class="bg-[#7360F2] text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 group relative">
-            <span class="absolute right-16 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Na shkruani në Viber</span>
-            <svg width="26" height="26" viewBox="0 0 512 512" fill="currentColor"><path d="M436.9 334.8c-2.8-2.6-26.1-13.6-26.1-13.6s-18.7-9.5-23.7-9.5c-4.1 0-14.7 9.8-24.9 22.1-5.7 6.9-12.7 7.6-18.8 4.7-27.1-12.9-63-35.6-91-63.5-27.9-27.9-50.6-63.9-63.5-91-2.9-6.1-2.2-13.1 4.7-18.8 12.3-10.2 22.1-20.8 22.1-24.9 0-5-9.5-23.7-9.5-23.7s-11-23.3-13.6-26.1c-3.1-3.3-8.8-4.2-13.3-2.3-13.5 5.7-32.1 16-41.5 28.1-11.4 14.6-16.7 33-14.3 50.1 5.9 41.5 31.7 94 77.1 139.4 45.4 45.4 97.9 71.2 139.4 77.1 17.1 2.4 35.5-2.9 50.1-14.3 12.1-9.4 22.4-28 28.1-41.5 1.9-4.5.9-10.2-2.4-13.3zm-59.5-127.3c0-21.6-17.5-39.1-39.1-39.1v-17c30.9 0 56.1 25.1 56.1 56.1h-17z"/><path d="M366.1 218.8c0-27.9-22.6-50.5-50.5-50.5v-17c37.3 0 67.5 30.2 67.5 67.5h-17z"/><path d="M354.8 218.8c0-21.6-17.5-39.1-39.1-39.1v-17c30.9 0 56.1 25.1 56.1 56.1h-17z"/><path d="M388.7 218.8c0-40.3-32.8-73.1-73.1-73.1v-17c49.7 0 90.1 40.4 90.1 90.1h-17z"/></svg>
+        <a href="viber://chat?number=+38349585195" aria-label="Contact on Viber" class="bg-[#7360F2] text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-95 group relative">
+            <span class="absolute right-16 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap" data-key="float.viber">Na shkruani në Viber</span>
+            <img src="https://www.viber.com/app/uploads/icon-white.png" alt="Viber Logo" class="w-7 h-7 object-contain">
         </a>
         <!-- WhatsApp -->
-        <a href="https://wa.me/38349585195" target="_blank" class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 group relative">
-            <span class="absolute right-16 bg-white text-black text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">Na shkruani në WhatsApp</span>
+        <a href="https://wa.me/38349585195" target="_blank" aria-label="Contact on WhatsApp" class="bg-[#25D366] text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 active:scale-95 group relative">
+            <span class="absolute right-16 bg-gray-900 text-white dark:bg-white dark:text-gray-900 text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap" data-key="float.whatsapp">Na shkruani në WhatsApp</span>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         </a>
     </div>
 
+    <!-- REQUEST A QUOTE MODAL -->
+    <div id="quote-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm px-4" aria-modal="true" role="dialog">
+        <div class="bg-white dark:bg-brand-darker w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 border border-gray-100 dark:border-white/10" id="modal-content">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-6 border-b border-gray-100 dark:border-white/5">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white" data-key="modal.title">Kërko Ofertë</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-brand-red transition-colors" aria-label="Close modal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <!-- Modal Body -->
+            <div class="p-6">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6" data-key="modal.desc">Përshkruani pajisjen dhe problemin. Ne do t'ju kthejmë përgjigje në WhatsApp me një vlerësim.</p>
+                <form id="quote-form" onsubmit="submitQuote(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-key="modal.deviceLabel">Modeli i Pajisjes (psh. iPhone 13 Pro)</label>
+                        <input type="text" id="quote-device" required class="w-full px-4 py-3 bg-gray-50 dark:bg-brand-dark border border-gray-200 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-red text-gray-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1" data-key="modal.issueLabel">Përshkrimi i Problemit</label>
+                        <textarea id="quote-issue" rows="3" required class="w-full px-4 py-3 bg-gray-50 dark:bg-brand-dark border border-gray-200 dark:border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-red text-gray-900 dark:text-white"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-[#25D366] hover:bg-[#20b858] text-white py-3.5 rounded-xl font-bold flex justify-center items-center gap-2 transition-colors mt-2">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        <span data-key="modal.submitBtn">Dërgo në WhatsApp</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // --- EXISTING WEBSITE LOGIC ---
+        // --- DATA STRUCTURES ---
+        // Note: In a larger production app, pricingData & softwareData would be fetched from external JSON files using fetch().
+        // Example: const response = await fetch('/api/pricing.json'); const pricingData = await response.json();
+        // Here, they are kept in-memory to ensure the HTML file remains fully independent and runnable.
+
         const translations = {
             al: {
                 "nav.services": "Shërbimet", "nav.pricing": "Çmimet", "nav.contact": "Kontakt",
-                "hero.headline_html": `Zgjidhje <span class="text-gradient">Profesionale</span><br>për pajisjet tuaja.`,
-                "pricingHeading": "Katalogu i Shërbimeve", "hero.cta": "Na Kontakto",
+                "hero.badge": "Specialist i Riparimeve të Avancuara",
+                "hero.headline_html": `Zgjidhje <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-brand-red dark:from-white dark:to-brand-red">Profesionale</span><br>për pajisjet tuaja.`,
+                "hero.sub": "Nga mikrosoldering te serverat DIY NAS – shërbime të specializuara me pajisje profesionale dhe saktësi maksimale.",
+                "hero.primaryBtn": "Rezervo Shërbimin", "hero.secondaryBtn": "Lista e Çmimeve", "hero.cta": "Kërko Ofertë",
+                "policy.title": "Diagnostikimi & Pagesa",
+                "policy.desc_html": "<strong>25€ Tarifa fillestare</strong> (e pakthyeshme) për çdo diagnostikim profesional. Pagesa e plotë e servisit kryhet vetëm pas përfundimit.",
+                "pricingHeading": "Katalogu i Shërbimeve", "pricingSub": "I rregulluar sipas kategorive kryesore për lehtësi kërkimi.",
                 "software.title": "Instalime Profesionale të Softuerëve", 
-                "software.desc": "Tarifa standarde për shërbime profesionale të instalimit dhe aktivizimit të programeve (pa TVSH)."
+                "software.desc": "Tarifa standarde për shërbime profesionale të instalimit dhe aktivizimit (pa TVSH).",
+                "software.col1": "Programi",
+                "contact.title": "Na Kontaktoni", "contact.hours": "Orari", "contact.days": "Hënë - Premte: 08:00 - 16:00",
+                "contact.helpTitle": "Nevojë për ndihmë?", "contact.helpDesc": "Për çdo pyetje rreth çmimeve apo shërbimeve specifike, kërkoni një ofertë direkt.",
+                "contact.helpBtn": "Kërko Ofertë", "footer.rights": "Të gjitha të drejtat të rezervuara.",
+                "float.viber": "Na shkruani në Viber", "float.whatsapp": "Na shkruani në WhatsApp",
+                "modal.title": "Kërko Ofertë", "modal.desc": "Përshkruani pajisjen dhe problemin. Ne do t'ju kthejmë përgjigje në WhatsApp me një vlerësim.",
+                "modal.deviceLabel": "Modeli i Pajisjes (psh. iPhone 13 Pro)", "modal.issueLabel": "Përshkrimi i Problemit", "modal.submitBtn": "Dërgo në WhatsApp"
             },
             en: {
                 "nav.services": "Services", "nav.pricing": "Pricing", "nav.contact": "Contact",
-                "hero.headline_html": `Professional <span class="text-gradient">Solutions</span><br>for your devices.`,
-                "pricingHeading": "Service Catalog", "hero.cta": "Contact Us",
+                "hero.badge": "Advanced Repair Specialist",
+                "hero.headline_html": `Professional <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-brand-red dark:from-white dark:to-brand-red">Solutions</span><br>for your devices.`,
+                "hero.sub": "From micro-soldering to DIY NAS servers – specialized services using professional tools and maximum precision.",
+                "hero.primaryBtn": "Book Service", "hero.secondaryBtn": "View Pricing", "hero.cta": "Request Quote",
+                "policy.title": "Diagnostics & Payment",
+                "policy.desc_html": "<strong>25€ Initial fee</strong> (non-refundable) for professional diagnostics. Full payment is made only after repair completion.",
+                "pricingHeading": "Service Catalog", "pricingSub": "Organized by main categories for easy browsing.",
                 "software.title": "Professional Software Installation", 
-                "software.desc": "Standard rates for professional software installation and activation services (excl. VAT)."
+                "software.desc": "Standard rates for professional software installation and activation services (excl. VAT).",
+                "software.col1": "Software",
+                "contact.title": "Contact Us", "contact.hours": "Working Hours", "contact.days": "Mon - Fri: 08:00 - 16:00",
+                "contact.helpTitle": "Need Help?", "contact.helpDesc": "For any questions regarding specific prices or services, request a quote directly.",
+                "contact.helpBtn": "Request a Quote", "footer.rights": "All rights reserved.",
+                "float.viber": "Message us on Viber", "float.whatsapp": "Message us on WhatsApp",
+                "modal.title": "Request a Quote", "modal.desc": "Describe your device and issue. We will reply on WhatsApp with an estimate.",
+                "modal.deviceLabel": "Device Model (e.g. iPhone 13 Pro)", "modal.issueLabel": "Issue Description", "modal.submitBtn": "Send on WhatsApp"
             }
         };
 
         const pricingData = [
-            {
-                id: 'apple', icon: '🍎', title: { al: 'Apple Devices (iPhone, Mac, iPad)', en: 'Apple Devices' },
-                items: [
-                    { n: { al: 'Screen / Display Replacement', en: 'Screen Replacement' }, p: '100–300€' },
-                    { n: { al: 'Battery Replacement', en: 'Battery Replacement' }, p: '80–150€' },
-                    { n: { al: 'Logic Board Repair (Micro-soldering)', en: 'Logic Board Repair' }, p: '150–300€' },
-                    { n: { al: 'macOS Software Repair', en: 'macOS Software Repair' }, p: '50–150€' },
-                    { n: { al: 'iPhone/Mac Data Recovery', en: 'Data Recovery' }, p: '100–300€' }
-                ]
-            },
-            {
-                id: 'phone', icon: '📱', title: { al: 'Smartphones & Tablets', en: 'Smartphones & Tablets' },
-                items: [
-                    { n: { al: 'Ekrani (LCD/OLED)', en: 'Screen (LCD/OLED)' }, p: '50–250€' },
-                    { n: { al: 'Ndërrim Baterie', en: 'Battery Replacement' }, p: '50–120€' },
-                    { n: { al: 'Porti i Mbushjes (Charging Port)', en: 'Charging Port' }, p: '50–100€' },
-                    { n: { al: 'Motherboard Repair', en: 'Motherboard Repair' }, p: '100–300€' },
-                    { n: { al: 'Riparim nga Uji (Water Damage)', en: 'Water Damage' }, p: '80–250€' },
-                    { n: { al: 'Software / Unlocking', en: 'Software / Unlocking' }, p: '50€' },
-                    { n: { al: 'Data Recovery', en: 'Data Recovery' }, p: '50–200€' }
-                ]
-            },
-            {
-                id: 'watch', icon: '⌚', title: { al: 'Smartwatch Repair', en: 'Smartwatch Repair' },
-                highlight: { al: 'Specialist në riparime smartwatch me pajisje profesionale dhe diagnostikim preciz', en: 'Smartwatch specialist with professional tools and precise diagnostics' },
-                items: [
-                    { n: { al: 'Screen / Display Replacement', en: 'Screen / Display' }, p: '50–150€' },
-                    { n: { al: 'Battery Replacement', en: 'Battery' }, p: '50–100€' },
-                    { n: { al: 'Charging Issues / Port', en: 'Charging Issues' }, p: '50–80€' },
-                    { n: { al: 'Water Damage Cleaning', en: 'Water Damage' }, p: '50–150€' },
-                    { n: { al: 'Software / Firmware Update', en: 'Software Update' }, p: '30–80€' },
-                    { n: { al: 'Diagnostics', en: 'Diagnostics' }, p: '25–50€' }
-                ]
-            },
-            {
-                id: 'comp', icon: '💻', title: { al: 'Laptops & Computers', en: 'Laptops & Computers' },
-                items: [
-                    { n: { al: 'Formatizim Windows XP – 8.1', en: 'Format Windows XP – 8.1' }, p: '30€' },
-                    { n: { al: 'Formatizim Windows 10', en: 'Format Windows 10' }, p: '45€' },
-                    { n: { al: 'Formatizim Windows 11', en: 'Format Windows 11' }, p: '50€' },
-                    { n: { al: 'macOS Older / Latest Versions', en: 'macOS Software' }, p: '30–100€' },
-                    { n: { al: 'Diagnostikim i Avancuar', en: 'Advanced Diagnostics' }, p: '25€' },
-                    { n: { al: 'Hardware Repair', en: 'Hardware Repair' }, p: '50–300€' },
-                    { n: { al: 'Deep Cleaning (Pastrim i thellë)', en: 'Deep Cleaning' }, p: '50€' },
-                    { n: { al: 'Thermal Paste Application', en: 'Thermal Paste' }, p: '30€' },
-                    { n: { al: 'Upgrade SSD / RAM', en: 'Upgrade SSD / RAM' }, p: '50–150€' },
-                    { n: { al: 'Backup & Disk Cloning', en: 'Backup & Cloning' }, p: '25–80€' },
-                    { n: { al: 'Advanced Data Recovery', en: 'Data Recovery' }, p: '50–250€' }
-                ]
-            },
-            {
-                id: 'storage', icon: '💾', title: { al: 'Storage Specialist (SSD / HDD / NVMe)', en: 'Storage Specialist' },
-                highlight: { al: 'Ekspert në riparime të mediave të ruajtjes me pajisje profesionale laboratorike', en: 'Expert in storage media repair using professional laboratory tools' },
-                items: [
-                    { n: { al: 'Diagnostikim Harduerik', en: 'Hardware Diagnostics' }, p: '25€' },
-                    { n: { al: 'SSD / NVMe Repair', en: 'SSD / NVMe Repair' }, p: '80–250€' },
-                    { n: { al: 'HDD Physical Repair', en: 'HDD Repair' }, p: '50–200€' },
-                    { n: { al: 'Data Recovery (Professional)', en: 'Data Recovery' }, p: '80–300€' },
-                    { n: { al: 'OS Migration (Transfer)', en: 'OS Migration' }, p: '50€' }
-                ]
-            },
-            {
-                id: 'server', icon: '🖥️', title: { al: 'Server & NAS Solutions', en: 'Server & NAS Solutions' },
-                highlight: { al: 'DIY NAS: Zgjidhje të personalizuara (TrueNAS / Unraid) për performancë maksimale', en: 'DIY NAS: Custom solutions (TrueNAS / Unraid) for maximum performance' },
-                items: [
-                    { n: { al: 'NAS Setup (Synology / QNAP)', en: 'NAS Setup' }, p: '100–300€' },
-                    { n: { al: 'DIY NAS Custom Build', en: 'DIY NAS' }, p: '150–500€' },
-                    { n: { al: 'Custom PC Server Build', en: 'Custom Server' }, p: '150–400€' },
-                    { n: { al: 'RAID Configuration & Storage', en: 'RAID Configuration' }, p: '100–250€' },
-                    { n: { al: 'Network Storage Setup', en: 'Network Storage' }, p: '80–200€' },
-                    { n: { al: 'User Permissions & Security', en: 'Security & Permissions' }, p: '50–150€' },
-                    { n: { al: 'Server Troubleshooting', en: 'Troubleshooting' }, p: '80–250€' },
-                    { n: { al: 'NAS/RAID Data Recovery', en: 'RAID Data Recovery' }, p: '150–500€' }
-                ]
-            },
-            {
-                id: 'cctv', icon: '👁️', title: { al: 'CCTV & Security Systems', en: 'CCTV & Security' },
-                items: [
-                    { n: { al: 'DVR/NVR Installation', en: 'DVR/NVR Installation' }, p: '50–150€' },
-                    { n: { al: 'IP/Analog Camera Configuration', en: 'Camera Configuration' }, p: '50€' },
-                    { n: { al: 'Security System Repair', en: 'System Repair' }, p: '50–200€' },
-                    { n: { al: 'Cabling & Signal Fix', en: 'Cabling & Signal' }, p: '50€' },
-                    { n: { al: 'Remote Access (Phone/PC)', en: 'Remote Access' }, p: '50€' }
-                ]
-            },
-            {
-                id: 'tvbox', icon: '📺', title: { al: 'Android Box & Apple TV', en: 'Android Box & Apple TV' },
-                highlight: { al: 'Riparim dhe konfigurim i avancuar për pajisje transmetuese dhe media players', en: 'Advanced repair and configuration for streaming and media players' },
-                items: [
-                    { n: { al: 'Diagnostikim i Pajisjes', en: 'Device Diagnostics' }, p: '15–25€' },
-                    { n: { al: 'Instalim Softueri / Firmware Flash', en: 'Software Update / Firmware Flash' }, p: '20–40€' },
-                    { n: { al: 'Apple TV Software Restore / Fix', en: 'Apple TV Software Restore' }, p: '25–50€' },
-                    { n: { al: 'Konfigurim Aplikacionesh (Kodi, IPTV, etj.)', en: 'App Configuration (Kodi, IPTV)' }, p: '15–30€' },
-                    { n: { al: 'Riparim i Portave (HDMI, Power, LAN)', en: 'Port Repair (HDMI, Power, LAN)' }, p: '30–70€' },
-                    { n: { al: 'Riparim Harduerik (Në Pllakë / Motherboard)', en: 'Motherboard Hardware Repair' }, p: '40–100€' },
-                    { n: { al: 'Pastrim i thellë dhe Ndërrim i Pastës Termike', en: 'Deep Clean & Thermal Paste' }, p: '20–35€' }
-                ]
-            },
-            {
-                id: 'backup', icon: '🔄', title: { al: 'Automation & Backup', en: 'Automation & Backup' },
-                items: [
-                    { n: { al: 'Automatic Backup Systems', en: 'Auto Backup' }, p: '80–200€' },
-                    { n: { al: 'Cloud Sync & Configuration', en: 'Cloud Sync' }, p: '50–150€' },
-                    { n: { al: 'Remote Access VPN Setup', en: 'VPN Setup' }, p: '80–200€' }
-                ]
-            }
+            { id: 'apple', icon: '🍎', title: { al: 'Apple Devices (iPhone, Mac, iPad)', en: 'Apple Devices' }, items: [{ n: { al: 'Screen / Display Replacement', en: 'Screen Replacement' }, p: '100–300€' }, { n: { al: 'Battery Replacement', en: 'Battery Replacement' }, p: '80–150€' }, { n: { al: 'Logic Board Repair (Micro-soldering)', en: 'Logic Board Repair' }, p: '150–300€' }, { n: { al: 'macOS Software Repair', en: 'macOS Software Repair' }, p: '50–150€' }, { n: { al: 'iPhone/Mac Data Recovery', en: 'Data Recovery' }, p: '100–300€' }] },
+            { id: 'phone', icon: '📱', title: { al: 'Smartphones & Tablets', en: 'Smartphones & Tablets' }, items: [{ n: { al: 'Ekrani (LCD/OLED)', en: 'Screen (LCD/OLED)' }, p: '50–250€' }, { n: { al: 'Ndërrim Baterie', en: 'Battery Replacement' }, p: '50–120€' }, { n: { al: 'Porti i Mbushjes (Charging Port)', en: 'Charging Port' }, p: '50–100€' }, { n: { al: 'Motherboard Repair', en: 'Motherboard Repair' }, p: '100–300€' }, { n: { al: 'Riparim nga Uji (Water Damage)', en: 'Water Damage' }, p: '80–250€' }, { n: { al: 'Software / Unlocking', en: 'Software / Unlocking' }, p: '50€' }, { n: { al: 'Data Recovery', en: 'Data Recovery' }, p: '50–200€' }] },
+            { id: 'watch', icon: '⌚', title: { al: 'Smartwatch Repair', en: 'Smartwatch Repair' }, highlight: { al: 'Specialist në riparime smartwatch me pajisje profesionale dhe diagnostikim preciz', en: 'Smartwatch specialist with professional tools and precise diagnostics' }, items: [{ n: { al: 'Screen / Display Replacement', en: 'Screen / Display' }, p: '50–150€' }, { n: { al: 'Battery Replacement', en: 'Battery' }, p: '50–100€' }, { n: { al: 'Charging Issues / Port', en: 'Charging Issues' }, p: '50–80€' }, { n: { al: 'Water Damage Cleaning', en: 'Water Damage' }, p: '50–150€' }, { n: { al: 'Software / Firmware Update', en: 'Software Update' }, p: '30–80€' }, { n: { al: 'Diagnostics', en: 'Diagnostics' }, p: '25–50€' }] },
+            { id: 'comp', icon: '💻', title: { al: 'Laptops & Computers', en: 'Laptops & Computers' }, items: [{ n: { al: 'Formatizim Windows XP – 8.1', en: 'Format Windows XP – 8.1' }, p: '30€' }, { n: { al: 'Formatizim Windows 10', en: 'Format Windows 10' }, p: '45€' }, { n: { al: 'Formatizim Windows 11', en: 'Format Windows 11' }, p: '50€' }, { n: { al: 'macOS Older / Latest Versions', en: 'macOS Software' }, p: '30–100€' }, { n: { al: 'Diagnostikim i Avancuar', en: 'Advanced Diagnostics' }, p: '25€' }, { n: { al: 'Hardware Repair', en: 'Hardware Repair' }, p: '50–300€' }, { n: { al: 'Deep Cleaning (Pastrim i thellë)', en: 'Deep Cleaning' }, p: '50€' }, { n: { al: 'Thermal Paste Application', en: 'Thermal Paste' }, p: '30€' }, { n: { al: 'Upgrade SSD / RAM', en: 'Upgrade SSD / RAM' }, p: '50–150€' }, { n: { al: 'Backup & Disk Cloning', en: 'Backup & Cloning' }, p: '25–80€' }, { n: { al: 'Advanced Data Recovery', en: 'Data Recovery' }, p: '50–250€' }] },
+            { id: 'storage', icon: '💾', title: { al: 'Storage Specialist (SSD / HDD / NVMe)', en: 'Storage Specialist' }, highlight: { al: 'Ekspert në riparime të mediave të ruajtjes me pajisje profesionale laboratorike', en: 'Expert in storage media repair using professional laboratory tools' }, items: [{ n: { al: 'Diagnostikim Harduerik', en: 'Hardware Diagnostics' }, p: '25€' }, { n: { al: 'SSD / NVMe Repair', en: 'SSD / NVMe Repair' }, p: '80–250€' }, { n: { al: 'HDD Physical Repair', en: 'HDD Repair' }, p: '50–200€' }, { n: { al: 'Data Recovery (Professional)', en: 'Data Recovery' }, p: '80–300€' }, { n: { al: 'OS Migration (Transfer)', en: 'OS Migration' }, p: '50€' }] },
+            { id: 'server', icon: '🖥️', title: { al: 'Server & NAS Solutions', en: 'Server & NAS Solutions' }, highlight: { al: 'DIY NAS: Zgjidhje të personalizuara (TrueNAS / Unraid) për performancë maksimale', en: 'DIY NAS: Custom solutions (TrueNAS / Unraid) for maximum performance' }, items: [{ n: { al: 'NAS Setup (Synology / QNAP)', en: 'NAS Setup' }, p: '100–300€' }, { n: { al: 'DIY NAS Custom Build', en: 'DIY NAS' }, p: '150–500€' }, { n: { al: 'Custom PC Server Build', en: 'Custom Server' }, p: '150–400€' }, { n: { al: 'RAID Configuration & Storage', en: 'RAID Configuration' }, p: '100–250€' }, { n: { al: 'Network Storage Setup', en: 'Network Storage' }, p: '80–200€' }, { n: { al: 'User Permissions & Security', en: 'Security & Permissions' }, p: '50–150€' }, { n: { al: 'Server Troubleshooting', en: 'Troubleshooting' }, p: '80–250€' }, { n: { al: 'NAS/RAID Data Recovery', en: 'RAID Data Recovery' }, p: '150–500€' }] },
+            { id: 'cctv', icon: '👁️', title: { al: 'CCTV & Security Systems', en: 'CCTV & Security' }, items: [{ n: { al: 'DVR/NVR Installation', en: 'DVR/NVR Installation' }, p: '50–150€' }, { n: { al: 'IP/Analog Camera Configuration', en: 'Camera Configuration' }, p: '50€' }, { n: { al: 'Security System Repair', en: 'System Repair' }, p: '50–200€' }, { n: { al: 'Cabling & Signal Fix', en: 'Cabling & Signal' }, p: '50€' }, { n: { al: 'Remote Access (Phone/PC)', en: 'Remote Access' }, p: '50€' }] },
+            { id: 'tvbox', icon: '📺', title: { al: 'Android Box & Apple TV', en: 'Android Box & Apple TV' }, highlight: { al: 'Riparim dhe konfigurim i avancuar për pajisje transmetuese dhe media players', en: 'Advanced repair and configuration for streaming and media players' }, items: [{ n: { al: 'Diagnostikim i Pajisjes', en: 'Device Diagnostics' }, p: '15–25€' }, { n: { al: 'Instalim Softueri / Firmware Flash', en: 'Software Update / Firmware Flash' }, p: '20–40€' }, { n: { al: 'Apple TV Software Restore / Fix', en: 'Apple TV Software Restore' }, p: '25–50€' }, { n: { al: 'Konfigurim Aplikacionesh (Kodi, IPTV, etj.)', en: 'App Configuration (Kodi, IPTV)' }, p: '15–30€' }, { n: { al: 'Riparim i Portave (HDMI, Power, LAN)', en: 'Port Repair (HDMI, Power, LAN)' }, p: '30–70€' }, { n: { al: 'Riparim Harduerik (Në Pllakë / Motherboard)', en: 'Motherboard Hardware Repair' }, p: '40–100€' }, { n: { al: 'Pastrim i thellë dhe Ndërrim i Pastës Termike', en: 'Deep Clean & Thermal Paste' }, p: '20–35€' }] },
+            { id: 'backup', icon: '🔄', title: { al: 'Automation & Backup', en: 'Automation & Backup' }, items: [{ n: { al: 'Automatic Backup Systems', en: 'Auto Backup' }, p: '80–200€' }, { n: { al: 'Cloud Sync & Configuration', en: 'Cloud Sync' }, p: '50–150€' }, { n: { al: 'Remote Access VPN Setup', en: 'VPN Setup' }, p: '80–200€' }] }
         ];
 
+        const softwareData = [
+            { name: "V-Ray", win: "30€", mac: "50€" },
+            { name: "Sketchup", win: "30€", mac: "50€" },
+            { name: "Rhinoceros 3D", win: "40€", mac: "60€" },
+            { name: "Revit", win: "20€", mac: "40€" },
+            { name: "3DS MAX", win: "40€", mac: "60€" },
+            { name: "Adobe Illustrator", win: "20€", mac: "40€" },
+            { name: "ArchiCad", win: "30€", mac: "50€" },
+            { name: "AutoCAD", win: "30€", mac: "50€" },
+            { name: "Microsoft Office", win: "30€", mac: "-" },
+            { name: "Enscape", win: "20€", mac: "50€" },
+            { name: "InDesign", win: "30€", mac: "50€" },
+            { name: "Lumion 12.5V", win: "20€", mac: "40€" },
+            { name: "Adobe Photoshop", win: "20€", mac: "40€" }
+        ];
+
+        // --- APP STATE ---
         let currentLang = 'al';
+        let isDarkMode = false;
+
+        // --- CORE FUNCTIONS ---
+
+        // Initialize Theme from System Preferences or LocalStorage
+        function initTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            } else {
+                isDarkMode = false;
+                document.documentElement.classList.remove('dark');
+            }
+            updateThemeIcon();
+        }
+
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            }
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const iconBtn = document.getElementById('theme-toggle');
+            if(isDarkMode) {
+                iconBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+            } else {
+                iconBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+            }
+        }
 
         function updateUI() {
+            // Update simple text translations
             document.querySelectorAll('[data-key]').forEach(el => {
                 const key = el.getAttribute('data-key');
                 if (translations[currentLang][key]) {
@@ -447,27 +446,28 @@
                 }
             });
 
+            // Re-render Accordion
             const accordion = document.getElementById('pricing-accordion');
             accordion.innerHTML = '';
             
             pricingData.forEach(cat => {
                 const div = document.createElement('div');
-                div.className = 'fade-in rounded-3xl border border-black/5 bg-white overflow-hidden shadow-sm';
+                div.className = 'fade-in rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-brand-darker overflow-hidden shadow-sm transition-colors';
                 div.innerHTML = `
-                    <button onclick="toggleAccordion('${cat.id}')" class="w-full px-8 py-6 flex items-center justify-between text-left hover:bg-black/[0.01]">
+                    <button aria-expanded="false" onclick="toggleAccordion('${cat.id}')" class="w-full px-6 md:px-8 py-6 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-white/5 transition-colors focus:outline-none">
                         <div class="flex items-center gap-4">
                             <span class="text-2xl">${cat.icon}</span>
-                            <h3 class="text-lg font-bold text-black">${cat.title[currentLang]}</h3>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white">${cat.title[currentLang]}</h3>
                         </div>
-                        <svg class="text-black/20 transform transition-transform duration-300 arrow-${cat.id}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+                        <svg class="text-gray-400 transform transition-transform duration-300 arrow-${cat.id}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
                     </button>
-                    <div id="content-${cat.id}" class="accordion-content px-8">
-                        ${cat.highlight ? `<div class="mb-4 p-4 rounded-2xl highlight-box text-sm font-medium text-black/70">${cat.highlight[currentLang]}</div>` : ''}
+                    <div id="content-${cat.id}" class="accordion-content px-6 md:px-8">
+                        ${cat.highlight ? `<div class="mb-4 p-4 rounded-2xl bg-gray-50 dark:bg-white/5 border-l-4 border-brand-red text-sm font-medium text-gray-700 dark:text-gray-300">${cat.highlight[currentLang]}</div>` : ''}
                         <ul class="space-y-1">
                             ${cat.items.map(item => `
-                                <li class="flex justify-between items-center py-4 border-b border-black/5 last:border-0">
-                                    <span class="text-black/60 text-sm md:text-base">${item.n[currentLang]}</span>
-                                    <span class="font-bold text-black whitespace-nowrap ml-4">${item.p}</span>
+                                <li class="flex justify-between items-center py-3 md:py-4 border-b border-gray-100 dark:border-white/5 last:border-0 hover:bg-gray-50 dark:hover:bg-white/[0.02] px-2 -mx-2 rounded-lg transition-colors">
+                                    <span class="text-gray-600 dark:text-gray-400 text-sm md:text-base">${item.n[currentLang]}</span>
+                                    <span class="font-bold text-gray-900 dark:text-white whitespace-nowrap ml-4">${item.p}</span>
                                 </li>
                             `).join('')}
                         </ul>
@@ -475,43 +475,141 @@
                 `;
                 accordion.appendChild(div);
             });
+            
+            // Re-render Software Table
+            renderSoftwareTable(softwareData);
             handleScroll();
         }
+
+        // --- UI INTERACTIONS ---
 
         function toggleAccordion(id) {
             const content = document.getElementById(`content-${id}`);
             const arrow = document.querySelector(`.arrow-${id}`);
+            const btn = content.previousElementSibling;
             const isActive = content.classList.contains('active');
             
+            // Close all others first (Optional: for a standard accordion feel)
+            document.querySelectorAll('.accordion-content.active').forEach(el => {
+                if(el.id !== `content-${id}`) {
+                    el.classList.remove('active');
+                    el.previousElementSibling.setAttribute('aria-expanded', 'false');
+                    el.previousElementSibling.querySelector('svg').classList.remove('rotate-180');
+                }
+            });
+
             if (!isActive) {
                 content.classList.add('active');
                 arrow.classList.add('rotate-180');
+                btn.setAttribute('aria-expanded', 'true');
             } else {
                 content.classList.remove('active');
                 arrow.classList.remove('rotate-180');
+                btn.setAttribute('aria-expanded', 'false');
             }
         }
 
         function toggleLanguage() {
             currentLang = currentLang === 'al' ? 'en' : 'al';
             document.getElementById('lang-toggle').textContent = currentLang === 'al' ? 'EN' : 'AL';
+            document.getElementById('mobile-lang-span').textContent = currentLang === 'al' ? 'EN' : 'AL';
+            document.documentElement.lang = currentLang;
             updateUI();
         }
 
         function toggleMobileMenu() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
+
+        // --- SOFTWARE FILTER LOGIC ---
+        
+        function renderSoftwareTable(data) {
+            const tbody = document.getElementById('software-table-body');
+            const emptyState = document.getElementById('software-empty-state');
+            tbody.innerHTML = '';
+            
+            if(data.length === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                data.forEach(item => {
+                    tbody.innerHTML += `
+                        <div class="grid grid-cols-[2fr_1fr_1fr] md:grid-cols-3 gap-2 md:gap-4 p-4 md:p-5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors items-center group">
+                            <div class="font-semibold text-gray-900 dark:text-white pl-2 md:pl-4 group-hover:text-brand-red transition-colors">${item.name}</div>
+                            <div class="text-center font-bold text-gray-700 dark:text-gray-300">${item.win}</div>
+                            <div class="text-center font-bold text-gray-700 dark:text-gray-300">${item.mac}</div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function filterSoftware() {
+            const query = document.getElementById('software-search').value.toLowerCase();
+            const filteredData = softwareData.filter(item => item.name.toLowerCase().includes(query));
+            renderSoftwareTable(filteredData);
+        }
+
+        // --- MODAL LOGIC ---
+        
+        function openModal() {
+            const modal = document.getElementById('quote-modal');
+            const content = document.getElementById('modal-content');
+            modal.classList.remove('hidden');
+            // Slight delay to allow display:block to apply before animating scale
+            setTimeout(() => content.classList.replace('scale-95', 'scale-100'), 10);
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('quote-modal');
+            const content = document.getElementById('modal-content');
+            content.classList.replace('scale-100', 'scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function submitQuote(e) {
+            e.preventDefault();
+            const device = document.getElementById('quote-device').value;
+            const issue = document.getElementById('quote-issue').value;
+            
+            // Build the WhatsApp message
+            const greeting = currentLang === 'al' ? "Përshëndetje! Dua të kërkoj një ofertë." : "Hello! I would like to request a quote.";
+            const deviceLabel = currentLang === 'al' ? "Pajisja" : "Device";
+            const issueLabel = currentLang === 'al' ? "Problemi" : "Issue";
+            
+            const message = `${greeting}\n\n*${deviceLabel}:* ${device}\n*${issueLabel}:* ${issue}`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            const url = `https://wa.me/38349585195?text=${encodedMessage}`;
+            window.open(url, '_blank');
+            closeModal();
+            e.target.reset(); // Clear form
+        }
+
+        // --- SCROLL ANIMATIONS ---
 
         function handleScroll() {
             document.querySelectorAll('.fade-in').forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight * 0.95) {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.90) {
                     el.classList.add('visible');
                 }
             });
         }
 
+        // --- INIT ---
         window.addEventListener('scroll', handleScroll);
+        window.addEventListener('click', (e) => {
+            // Close modal if clicking outside the modal content
+            if(e.target === document.getElementById('quote-modal')) closeModal();
+        });
+        
         window.onload = () => {
+            initTheme();
             document.getElementById('year').textContent = new Date().getFullYear();
             updateUI();
         };

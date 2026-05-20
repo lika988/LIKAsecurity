@@ -54,6 +54,7 @@
                         'slide-down': 'slideDown 0.2s ease-out forwards',
                         'swipe-x': 'swipeX 1.5s ease-in-out infinite',
                         'ring': 'ring 2s ease-in-out infinite',
+                        'sweep': 'sweep 4s ease-in-out infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -76,6 +77,10 @@
                             '40%': { transform: 'rotate(-15deg)' },
                             '50%': { transform: 'rotate(0)' },
                             '100%': { transform: 'rotate(0)' }
+                        },
+                        sweep: {
+                            '0%': { transform: 'translateX(-200%) skewX(-20deg)' },
+                            '100%': { transform: 'translateX(200%) skewX(-20deg)' }
                         }
                     }
                 }
@@ -335,7 +340,6 @@
                         <i data-lucide="badge-euro" class="w-4 h-4"></i>
                         <span data-i18n="nav_pricing">Çmimet</span>
                     </a>
-                    <a href="https://service.likaapps.com/" target="_blank" class="nav-item text-sm font-bold tracking-wide" data-i18n="nav_service">Servisim</a>
                     <a href="#contact" class="nav-item text-sm font-bold tracking-wide" data-i18n="nav_contact">Kontakt</a>
                 </div>
 
@@ -399,13 +403,6 @@
                     <i data-lucide="badge-euro" class="w-5 h-5"></i>
                 </div>
                 <span class="font-bold text-[15px] text-lika-red" data-i18n="nav_pricing">Çmimet e Shërbimeve</span>
-            </a>
-            
-            <a href="https://service.likaapps.com/" target="_blank" onclick="toggleMobileMenu()" class="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
-                <div class="p-2 bg-gray-50 rounded-lg group-hover:bg-white group-hover:text-lika-red transition-colors group-hover:shadow-sm">
-                    <i data-lucide="wrench" class="w-5 h-5 text-gray-500 group-hover:text-lika-red"></i>
-                </div>
-                <span class="font-bold text-[15px] text-lighttext group-hover:text-lika-red transition-colors" data-i18n="nav_service">Servisim</span>
             </a>
             
             <a href="#contact" onclick="toggleMobileMenu()" class="flex items-center gap-4 p-3 rounded-xl hover:bg-gray-50 transition-colors group">
@@ -472,6 +469,36 @@
                     <span data-i18n="btn_call_now">Thirr Tani</span>
                 </a>
             </div>
+
+            <!-- New Islamic Button (SHËRBIME FALAS PËR XHAMITË) -->
+            <div class="mt-10 flex justify-center animate-fade-in-up w-full px-4" style="animation-delay: 0.1s;">
+                <div class="relative group cursor-pointer w-full sm:w-auto">
+                    <!-- Glow background -->
+                    <div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl blur-lg opacity-30 group-hover:opacity-60 transition duration-500 group-hover:duration-200 animate-pulse"></div>
+                    
+                    <a href="https://likasecurity.com/falas" class="relative flex items-center justify-center gap-4 sm:gap-6 px-6 sm:px-10 py-4 sm:py-5 bg-[#022c22] border border-emerald-500/30 rounded-2xl overflow-hidden transition-all duration-300 transform group-hover:-translate-y-1 shadow-2xl">
+                        
+                        <!-- Shine effect -->
+                        <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-sweep pointer-events-none"></div>
+
+                        <!-- Inner Icon -->
+                        <div class="relative p-3 bg-emerald-900/50 rounded-xl border border-emerald-500/20 shadow-inner group-hover:rotate-12 transition-transform duration-500">
+                            <i data-lucide="moon-star" class="w-7 h-7 sm:w-8 sm:h-8 text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.8)]"></i>
+                            <span class="absolute inset-0 rounded-xl bg-emerald-400 opacity-20 animate-ping" style="animation-duration: 2s;"></span>
+                        </div>
+
+                        <!-- Inner Text -->
+                        <div class="flex flex-col text-left">
+                            <span class="text-base sm:text-xl font-bold tracking-[0.15em] text-white drop-shadow-md mb-1.5">SHËRBIME FALAS</span>
+                            <div class="flex items-center gap-3">
+                                <span class="h-px w-8 bg-gradient-to-r from-emerald-400 to-transparent"></span>
+                                <span class="text-[10px] sm:text-xs text-emerald-300 font-bold tracking-[0.3em] uppercase drop-shadow-sm">PËR XHAMITË</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -686,7 +713,7 @@
                     </button>
                     <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <div class="p-5 md:p-6 pt-0 text-sm md:text-base text-lighttext/80 font-medium leading-relaxed border-t border-gray-100/0" data-i18n="faq_a5">
-                            Instalimi standard falas mbulon montimin në lartësi normale (përmes shkallëve standarde) dhe shpime standarde të mureve të shtëpisë/biznesit. Nëse objekti kërkon shpimin e mureve jashtëzakonisht të trasha të betonit të armuar, përdorimin e skelave për lartësi ekstreme, ose hapjen e kanaleve të thella nën tokë (gërmime), këto konsiderohen shërbime të rënda ekstra dhe tarifohen bazuar në Listën e Çmimeve të Shërbimeve.
+                            Instalimi standard falas mbulon montimin në lartësi normale (përmes shkallëve standarde) dhe shpime standarde të mureve të shtëpisë/biznesit. Nëse objekti kërkon shpimin e mureve jashtëzakonisht të trasha të betonit të armuar, përdorimin e skelave për lartësi ekstreme, ose hapjen e kanaleve të internal nën tokë (gërmime), këto konsiderohen shërbime të rënda ekstra dhe tarifohen bazuar në Listën e Çmimeve të Shërbimeve.
                         </div>
                     </div>
                 </div>
@@ -735,7 +762,7 @@
                     </button>
                     <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <div class="p-5 md:p-6 pt-0 text-sm md:text-base text-lighttext/80 font-medium leading-relaxed border-t border-gray-100/0" data-i18n="faq_a8">
-                            Ofrojmë fleksibilitet të plotë. Ju mund të paguani me para në dorë (Cash) pas përfundimit dhe testimit të punës, përmes transfertave bankare për biznese, si dhe shumë shpejt edhe me kartelë bankare. Ne lëshojmë faturë të rregullt për çdo shërbim.
+                            Ofrojmë fleksibilitet të plotë. Ju mund të paguani me para në dorë (Cash) pas përfundimit dhe testimit të punës, (se shpejti) -> përmes transfertave bankare për biznese, si dhe shumë shpejt edhe me kartelë bankare. (se shpejti) -> Ne lëshojmë faturë të rregullt për çdo shërbim.
                         </div>
                     </div>
                 </div>
@@ -985,7 +1012,6 @@
                         <li><a href="index.html" class="text-sm text-darktext hover:text-white transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-lika-red"></i> <span data-i18n="nav_home">Kryefaqja</span></a></li>
                         <li><a href="index.html#offers" class="text-sm text-darktext hover:text-white transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-lika-red"></i> <span data-i18n="nav_offers">Ofertat</span></a></li>
                         <li><a href="cmimet.html" class="text-sm text-darktext hover:text-white transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-lika-red"></i> <span data-i18n="nav_pricing">Çmimet e Shërbimeve</span></a></li>
-                        <li><a href="https://service.likaapps.com/" target="_blank" class="text-sm text-darktext hover:text-white transition-colors flex items-center gap-2"><i data-lucide="chevron-right" class="w-4 h-4 text-lika-red"></i> <span data-i18n="nav_service">Servisim Pajisjesh</span></a></li>
                     </ul>
                 </div>
 
@@ -1033,7 +1059,7 @@
             </div>
             
             <div class="border-t border-[#2a2a2a] pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-                <p class="text-darktext font-medium text-[11px] md:text-xs text-center md:text-left">&copy; <span id="year"></span> LIKAsecurity. <span data-i18n="footer_rights">Të gjitha të drejtat e rezervuara.</span></p>
+                <p class="text-darktext font-medium text-[11px] md:text-xs text-center md:text-left">&copy; <span id="year"></span> LIKAsecurity. <span data-i18n="footer_rights">Të gjitha të drejtat e rezervuara. (kjo eshte nje demo i uebsajtit, eshte ne perpunim) </span></p>
                 <div class="flex items-center gap-1.5 text-[11px] md:text-xs font-medium text-darktext">
                     Designed with <i data-lucide="heart" class="w-3.5 h-3.5 text-lika-red fill-lika-red animate-pulse"></i> in Kosovo from <a href="https://www.likaapps.com" target="_blank" class="text-lika-red font-bold hover:underline">LIKA</a>
                 </div>
@@ -1305,7 +1331,7 @@
                     { sq: 'Sistem Sigurie i Shkallëzueshëm', en: 'Scalable Security System', icon: 'shield-check' }
                 ],
                 detailedDesc: {
-                    sq: 'E dizajnuar specifikisht për të maksimizuar sigurinë e bizneseve moderne. Kjo pako sjell teknologjinë më inovative në treg: <b>Smart Hybrid Light</b>. Kamerat operojnë normalisht me rreze infra të kuqe për të qenë diskrete dhe për të kursyer energji, por në momentin që <b>Motion Detection 2.0</b> dallon një njeri ose automjet, ato ndezin dritat e bardha duke offering menjëherë një pamje fantastike me ngjyra dhe duke vepruar si një mjet aktiv parandalues. Alarmet e rreme nga kushtet e motit eliminohen, duke ju dhënë njoftime vetëm kur vërtet ka rëndësi. Rezolucioni premium <b>6MP</b> siguron qartësi të jashtëzakonshme për identifikimin e fytyrave dhe targave. Zgjedhja ideale balancuese mes teknologjisë pro dhe çmimit.',
+                    sq: 'E dizajnuar specifikisht për të maksimizuar sigurinë e bizneseve moderne. Kjo pako sjell teknologjinë më inovative në treg: <b>Smart Hybrid Light</b>. Kamerat operojnë normalisht me rreze infra të kuqe për të qenë diskrete dhe për të kursyer energji, por në momentin që <b>Motion Detection 2.0</b> dallon një njeri ose automjet, ato ndezin dritat e bardha duke ofruar menjëherë një pamje fantastike me ngjyra dhe duke vepruar si një mjet aktiv parandalues. Alarmet e rreme nga kushtet e motit eliminohen, duke ju dhënë njoftime vetëm kur vërtet ka rëndësi. Rezolucioni premium <b>6MP</b> siguron qartësi të jashtëzakonshme për identifikimin e fytyrave dhe targave. Zgjedhja ideale balancuese mes teknologjisë pro dhe çmimit.',
                     en: 'Designed specifically to maximize the security of modern businesses. This package brings the most innovative technology to the market: <b>Smart Hybrid Light</b>. The cameras operate normally with infrared to remain discreet and save energy, but the moment <b>Motion Detection 2.0</b> detects a human or vehicle, they turn on white lights immediately providing a fantastic color image and acting as an active deterrent. False alarms from weather conditions are eliminated, giving you notifications only when it truly matters. The premium <b>6MP</b> resolution ensures exceptional clarity for identifying faces and license plates. The ideal balanced choice between pro technology and price.'
                 },
                 desc: ['1x NVR DS-7604NXI-K1 (4 Ch)', '2x Kamera DS-2CD1067G2H-LIU', '2x Kamera DS-2CD1367G2H-LIU', '1x Switch PoE DS-3E0105P-E/M', '1x HDD Seagate SkyHawk 1TB', '90m Kabllo UTP CAT6'] 
@@ -1449,9 +1475,9 @@
 
         const i18n = {
             sq: {
-                nav_home: "Kryefaqja", nav_about: "Rreth Nesh", nav_service: "Servisim", nav_offers: "Ofertat", nav_contact: "Kontakt",
+                nav_home: "Kryefaqja", nav_about: "Rreth Nesh", nav_offers: "Ofertat", nav_contact: "Kontakt",
                 nav_pricing: "Çmimet",
-                btn_device_service: "Servisimi", btn_close: "Mbylle",
+                btn_close: "Mbylle",
                 btn_call_now: "Thirr Tani", btn_visit_site: "Faqja Zyrtare",
                 hero_title1: "Siguria Juaj,", hero_title2: "Prioriteti Ynë.",
                 hero_subtitle: "Zgjidhje teknologjike premium për kamera sigurie, sisteme alarmi, video interfon dhe servisim profesional. Besueshmëri që vlen.",
@@ -1512,9 +1538,9 @@
                 faq_a10: "Po, ne ofrojmë shërbime në të gjithë territorin e Republikës së Kosovës. Për rajonin e Prishtinës (përfshirë Fushë Kosovën dhe Obiliqin) ardhja është tërësisht pa pagesë, ndërsa për qytetet e tjera aplikohet vetëm një tarifë minimale për mbulimin e shpenzimeve të udhëtimit."
             },
             en: {
-                nav_home: "Home", nav_about: "About Us", nav_service: "Services", nav_offers: "Offers", nav_contact: "Contact",
+                nav_home: "Home", nav_about: "About Us", nav_offers: "Offers", nav_contact: "Contact",
                 nav_pricing: "Prices",
-                btn_device_service: "Services", btn_close: "Close Pop-up",
+                btn_close: "Close Pop-up",
                 btn_call_now: "Call Now", btn_visit_site: "Official Website",
                 hero_title1: "Your Security,", hero_title2: "Our Priority.",
                 hero_subtitle: "Premium technological solutions for security cameras, alarm systems, video intercoms, and professional servicing. Reliability that matters.",

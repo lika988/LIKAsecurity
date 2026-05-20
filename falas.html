@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="sq" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIKA Security - Coming Soon</title>
+    
+    <!-- Tailwind CSS (për dizajn ultra-profesional dhe të pastër) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#e5c158',
+                            500: '#d4af37',
+                            600: '#b5952f'
+                        },
+                        dark: {
+                            900: '#070707',
+                            800: '#121212'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cursor-x: -100vw; /* Fillon jashtë ekranit */
+            --cursor-y: -100vh;
+            --spotlight-size: 500px; /* Madhësia e fade-it të dritës */
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --spotlight-size: 350px;
+            }
+        }
+
+        body {
+            background-color: #030303;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Fotografia në Background (Me Fade dhe Blur minimal) */
+        .sheep-bg {
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            z-index: 0;
+            /* Lidhja e fotos suaj */
+            background-image: url('https://images.pexels.com/photos/36731402/pexels-photo-36731402.jpeg?auto=compress&cs=tinysrgb&w=2000');
+            background-size: cover;
+            background-position: center;
+            /* Efekti fade me 50% opacity sic e kerkuat */
+            opacity: 0.25; 
+            /* Vendosa pak blur që teksti dhe karta të mbeten të lexueshme si Premium */
+            filter: blur(8px) brightness(0.8); 
+            pointer-events: none;
+        }
+
+        /* Gradienti që jep tranzicionin e butë nga errësira në foto */
+        .mockup-blur-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1;
+            background: linear-gradient(180deg, rgba(3,3,3,0.9) 0%, rgba(3,3,3,0.3) 50%, rgba(3,3,3,0.95) 100%);
+            pointer-events: none;
+        }
+
+        /* Drita Magjike që Ndjek Mausin/Scrollin (Background pa Blur) */
+        .sheep-bg-clear {
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            z-index: 2; /* Mbi gradientin e errët, nën tekste */
+            background-image: url('https://images.pexels.com/photos/36731402/pexels-photo-36731402.jpeg?auto=compress&cs=tinysrgb&w=2000');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.95;
+            filter: brightness(0.65) saturate(1.2); /* E thekson ngjyrën por s'lejon të verbohet teksti */
+            pointer-events: none;
+            /* Efekti i Maskimit me Gradient Rrethor (Spotlight me Fade të madhe) */
+            -webkit-mask-image: radial-gradient(circle var(--spotlight-size) at var(--cursor-x) var(--cursor-y), rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, transparent 100%);
+            mask-image: radial-gradient(circle var(--spotlight-size) at var(--cursor-x) var(--cursor-y), rgba(0,0,0,1) 0%, rgba(0,0,0,0.5) 40%, transparent 100%);
+        }
+
+        /* Karta kryesore me xham (Glassmorphism minimalist) */
+        .glass-panel {
+            background: rgba(15, 15, 15, 0.6);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Animacioni i rritjes se butë të progresit */
+        #progress-bar {
+            transition: width 0.1s ease-out;
+        }
+
+        /* Luxury "Million Dollar" Badge Styles */
+        .million-badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 24px;
+            margin-top: 8px;
+            background: linear-gradient(145deg, rgba(212,175,55,0.15) 0%, rgba(181,149,47,0.05) 100%);
+            border: 1px solid rgba(255, 235, 133, 0.4);
+            border-radius: 9999px;
+            color: #fbeea0;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 25px rgba(212,175,55,0.2), inset 0 0 15px rgba(212,175,55,0.1);
+            overflow: hidden;
+            transform-style: preserve-3d;
+            animation: float-badge 4s ease-in-out infinite;
+        }
+        
+        .million-badge::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transform: skewX(-25deg);
+            animation: gold-shine 3s infinite;
+        }
+
+        .million-badge svg {
+            filter: drop-shadow(0 0 8px rgba(255,235,133,0.6));
+            animation: gentle-pulse 2s infinite alternate;
+        }
+
+        @keyframes float-badge {
+            0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 0 25px rgba(212,175,55,0.2); }
+            50% { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 35px rgba(212,175,55,0.4); }
+        }
+
+        @keyframes gold-shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        @keyframes gentle-pulse {
+            0% { opacity: 0.8; transform: scale(0.95); filter: drop-shadow(0 0 4px rgba(255,235,133,0.4)); }
+            100% { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 12px rgba(255,235,133,0.9)); }
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col relative selection:bg-gold-500 selection:text-black">
+
+    <!-- Fotografia e Qengjave ne sfond -->
+    <div class="sheep-bg"></div>
+    <!-- Efekti qe perzien foton me faqen -->
+    <div class="mockup-blur-bg"></div>
+    <!-- Shtresa e Qartë që zbulon foton pa blur (Spotlight) -->
+    <div class="sheep-bg-clear"></div>
+
+    <!-- Butoni Kthehu Mbrapa -->
+    <div class="fixed top-6 left-6 lg:top-8 lg:left-10 z-50">
+        <a href="https://likasecurity.com/" class="group flex items-center gap-2 text-[0.65rem] md:text-xs tracking-[0.15em] uppercase text-white/70 hover:text-gold-400 border border-white/10 hover:border-gold-500/40 px-4 py-2 rounded-full bg-black/50 hover:bg-black/80 backdrop-blur-md transition-all duration-300 shadow-lg">
+            <svg class="w-3 h-3 md:w-4 md:h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Mbrapa
+        </a>
+    </div>
+
+    <!-- Përmbajtja Kryesore -->
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-5 py-16 lg:py-20 flex flex-col items-center">
+        
+        <!-- Logoja -->
+        <div class="mb-14 opacity-90 hover:opacity-100 transition-opacity duration-500">
+            <img src="https://ik.imagekit.io/p78ewpzv2/LIKA%20Security/LOGO/For%20website/Horziontal%20TEXT%20ONLY%20(for%20DARK%20Background)_SC7NxhJ_0.png?updatedAt=1776882134322&ik-s=4006f2b1e0fdd228ad15f4a221c084e676f0f7a1" alt="LIKA Security" class="h-12 md:h-16 object-contain filter drop-shadow-lg">
+        </div>
+
+        <!-- Teksti i Hyrjes (I Pastër dhe i Drejtpërdrejtë) -->
+        <div class="text-center mb-14">
+            <p class="text-gold-500 text-xs md:text-sm tracking-[0.3em] uppercase font-medium mb-5">Në Përpunim</p>
+            <h1 class="text-4xl md:text-[3.5rem] leading-tight font-light tracking-tight text-white mb-6">
+                Së Shpejti
+            </h1>
+            <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                Faqja jonë e re është në zhvillim. Planifikimi ynë është që platforma dhe shërbimet tona falas për xhamitë të nisin zyrtarisht në nder të festës së 
+                <span class="million-badge whitespace-nowrap">
+                    <!-- Ikona e Qengjit Premium -->
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13.5 17.5v3"/><path d="M17.5 17.5v3"/><path d="M6.5 17.5v3"/><path d="M10.5 17.5v3"/>
+                        <path d="M19 14.5c1.4-1.4 1.4-3.6 0-5a3.5 3.5 0 0 0-5 0c-1-1.3-2.8-1.3-3.8 0a3.5 3.5 0 0 0-4.6 1.4 3.5 3.5 0 0 0 .6 4.9 3.5 3.5 0 0 0 1.2.6v.1A3.5 3.5 0 0 0 11 20h2a3.5 3.5 0 0 0 3.6-3.4v-.1a3.5 3.5 0 0 0 2.4-2z"/>
+                        <path d="M7 11h.01"/>
+                    </svg>
+                    Kurban Bajramit
+                </span>.
+            </p>
+        </div>
+
+        <!-- Seksioni i Kohës (Countdown) -->
+        <div class="flex gap-2 sm:gap-4 md:gap-8 justify-center mb-12 w-full max-w-[100vw] overflow-hidden">
+            <div class="flex flex-col items-center">
+                <div class="h-[70px] w-[70px] sm:h-20 sm:w-20 md:h-28 md:w-28 flex items-center justify-center bg-white/[0.02] border border-white/5 rounded-xl md:rounded-2xl shadow-inner">
+                    <span id="days" class="text-2xl sm:text-3xl md:text-5xl font-light text-gradient tabular-nums">00</span>
+                </div>
+                <span class="text-[0.55rem] sm:text-[0.65rem] md:text-xs text-gray-500 uppercase tracking-widest mt-3 md:mt-4">Ditë</span>
+            </div>
+            
+            <div class="text-xl sm:text-2xl md:text-4xl font-light text-white/20 self-start mt-5 sm:mt-6 md:mt-8">:</div>
+            
+            <div class="flex flex-col items-center">
+                <div class="h-[70px] w-[70px] sm:h-20 sm:w-20 md:h-28 md:w-28 flex items-center justify-center bg-white/[0.02] border border-white/5 rounded-xl md:rounded-2xl shadow-inner">
+                    <span id="hours" class="text-2xl sm:text-3xl md:text-5xl font-light text-gradient tabular-nums">00</span>
+                </div>
+                <span class="text-[0.55rem] sm:text-[0.65rem] md:text-xs text-gray-500 uppercase tracking-widest mt-3 md:mt-4">Orë</span>
+            </div>
+
+            <div class="text-xl sm:text-2xl md:text-4xl font-light text-white/20 self-start mt-5 sm:mt-6 md:mt-8">:</div>
+
+            <div class="flex flex-col items-center">
+                <div class="h-[70px] w-[70px] sm:h-20 sm:w-20 md:h-28 md:w-28 flex items-center justify-center bg-white/[0.02] border border-white/5 rounded-xl md:rounded-2xl shadow-inner">
+                    <span id="minutes" class="text-2xl sm:text-3xl md:text-5xl font-light text-gradient tabular-nums">00</span>
+                </div>
+                <span class="text-[0.55rem] sm:text-[0.65rem] md:text-xs text-gray-500 uppercase tracking-widest mt-3 md:mt-4">Min</span>
+            </div>
+
+            <div class="text-xl sm:text-2xl md:text-4xl font-light text-white/20 self-start mt-5 sm:mt-6 md:mt-8">:</div>
+
+            <div class="flex flex-col items-center">
+                <div class="h-[70px] w-[70px] sm:h-20 sm:w-20 md:h-28 md:w-28 flex items-center justify-center bg-white/[0.02] border border-white/5 rounded-xl md:rounded-2xl shadow-inner">
+                    <span id="seconds" class="text-2xl sm:text-3xl md:text-5xl font-light text-gradient tabular-nums">00</span>
+                </div>
+                <span class="text-[0.55rem] sm:text-[0.65rem] md:text-xs text-gray-500 uppercase tracking-widest mt-3 md:mt-4">Sek</span>
+            </div>
+        </div>
+
+        <!-- Progress Bar (Llogaritja e Saktë) -->
+        <div class="w-full max-w-2xl mb-24">
+            <div class="flex justify-between items-end mb-3 px-1">
+                <span class="text-xs text-gray-500 uppercase tracking-widest font-medium flex items-center gap-2">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-gold-500"></span>
+                    </span>
+                    Developing...
+                </span>
+                <span id="progress-text" class="text-lg text-gold-500 font-light tracking-wide tabular-nums">0.0%</span>
+            </div>
+            <div class="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                <div id="progress-bar" class="h-full bg-gold-500 rounded-full w-[1%] relative shadow-[0_0_10px_rgba(212,175,55,0.4)]"></div>
+            </div>
+        </div>
+
+        <!-- Seksioni: Iniciativa për Xhamitë -->
+        <div class="w-full glass-panel rounded-3xl p-8 md:p-12 border-t border-white/10 relative overflow-hidden">
+            
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full blur-[80px]"></div>
+
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-light text-white mb-3">Iniciativa për Xhamitë</h2>
+                <p class="text-gold-400 text-sm tracking-widest uppercase">Shërbime Profesionale Falas</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 relative z-10">
+                
+                <!-- Kolona 1: Kushtet -->
+                <div>
+                    <h3 class="text-sm uppercase tracking-widest text-gray-500 mb-6 font-medium">Çfarë Përfshin?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start text-gray-300 text-sm leading-relaxed font-light">
+                            <span class="text-gold-500 mr-3 mt-0.5 opacity-80">✦</span>
+                            <span>Punimet si <strong class="text-white font-medium">montimi, instalimi dhe konfigurimi</strong> janë plotësisht falas.</span>
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm leading-relaxed font-light">
+                            <span class="text-gold-500 mr-3 mt-0.5 opacity-80">✦</span>
+                            <span>Pajisjet (Kamerat, Alarmet, etj.) duhet të blihen dhe sigurohen nga xhamia.</span>
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm leading-relaxed font-light">
+                            <span class="text-gold-500 mr-3 mt-0.5 opacity-80">✦</span>
+                            <span>Ofrojmë shërbimet tona për xhamitë në <strong class="text-white font-medium">Kosovë, Shqipëri dhe Maqedoni e Veriut (Shkup)</strong>.</span>
+                        </li>
+                        <li class="flex items-start text-gray-300 text-sm leading-relaxed font-light">
+                            <span class="text-gold-500 mr-3 mt-0.5 opacity-80">✦</span>
+                            <span>Shpenzimet e transportit mbulohen nga xhamia (Përjashtohen: <strong class="text-white font-medium">Prishtina, Fushë Kosova, Obiliqi</strong> ku transporti është gjithashtu falas).</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kolona 2: Motivi dhe Kontakti -->
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm uppercase tracking-widest text-gray-500 mb-6 font-medium">Pse e ofrojmë këtë?</h3>
+                        <p class="text-gray-400 text-sm font-light mb-4">E bëjmë këtë ekskluzivisht për hir të Zotit:</p>
+                        
+                        <blockquote class="border-l-2 border-gold-500/50 pl-5 my-6">
+                            <p class="font-serif italic text-white/90 text-base md:text-lg leading-relaxed">
+                                “Kush ndërton një xhami për Allahun, qoftë edhe sa madhësia e folesë së një zogu, Allahu do t’i ndërtojë atij një shtëpi në Xhenet.”
+                            </p>
+                            <footer class="mt-3 text-xs text-gray-500 uppercase tracking-wider">
+                                Sunan Ibn Majah — Hadithi nr. 738
+                            </footer>
+                        </blockquote>
+                    </div>
+
+                    <div class="mt-8">
+                        <a href="tel:+38349585195" class="group flex items-center justify-between bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 rounded-xl p-4 transition-all duration-300">
+                            <div>
+                                <p class="text-[0.65rem] text-gray-500 uppercase tracking-widest mb-1">Kontaktoni Tani</p>
+                                <p class="text-lg text-white font-medium tracking-wide">+383 49 585 195</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-full bg-gold-500/10 flex items-center justify-center group-hover:bg-gold-500/20 transition-colors">
+                                <svg class="w-4 h-4 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Logjika e Saktë -->
+    <script>
+        // Data përfundimtare: 26.05.2026 ora 00:00
+        const targetDate = new Date('2026-05-26T00:00:00').getTime();
+        
+        // Data e fillimit e sakte: 01.05.2026 ora 00:00
+        const startDate = new Date('2026-05-01T00:00:00').getTime();
+
+        function updateTimeAndProgress() {
+            const now = new Date().getTime();
+            
+            // --- 1. Llogaritja e Countdown (Përditësohet çdo sekondë saktësisht) ---
+            const distance = targetDate - now;
+
+            if (distance > 0) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                
+                const secEl = document.getElementById('seconds');
+                if(secEl) secEl.innerText = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById('days').innerText = "00";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                const secEl = document.getElementById('seconds');
+                if(secEl) secEl.innerText = "00";
+            }
+
+            // --- 2. Llogaritja e Progresit Reale sipas datave të kërkuara ---
+            const totalDuration = targetDate - startDate;
+            const timePassed = now - startDate;
+
+            let percentage;
+            
+            // Nëse jemi para datës së fillimit (01 Maj 2026), mbaje tek 0%
+            if (now < startDate) {
+                percentage = 0;
+            } 
+            // Nëse data 26 Maj 2026 ora 00:00 ka kaluar, mbaje tek 100%
+            else if (now >= targetDate) {
+                percentage = 100;
+            } 
+            // Përndryshe, llogaritet saktë matematikisht nga 0% deri në 100% duke përdorur kohën që kalon
+            else {
+                percentage = (timePassed / totalDuration) * 100;
+            }
+
+            // Shfaqja "E Gjallë" me 1 numër pas presjes (p.sh. 1.1%)
+            // Ky format ruan lëvizjen live por e mban shumë më të pastër e profesionale
+            document.getElementById('progress-text').innerText = percentage.toFixed(1) + '%';
+            document.getElementById('progress-bar').style.width = percentage + '%';
+        }
+
+        // Ekzekutimi Fillestar
+        updateTimeAndProgress();
+
+        // Rifreskimi çdo 50 milisekonda për lëvizje natyrale dhe pa ngecje
+        setInterval(updateTimeAndProgress, 50);
+
+        // --- EFEKTI INTERAKTIV I DRITËS (SPOTLIGHT) --- //
+        
+        // 1. Për Desktop: Drita ndjek mausin fiks aty ku leviz
+        document.addEventListener('mousemove', (e) => {
+            document.documentElement.style.setProperty('--cursor-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--cursor-y', e.clientY + 'px');
+        });
+
+        // 2. Për Mobile: Efekt fantastik "Skanimi" me Scroll
+        // Kur bën scroll, drita kalon nga lart-poshtë ekranit sikur po skanon faqen
+        document.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768) {
+                // Llogarisim sa përqind të faqes ka kaluar përdoruesi
+                const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+                // Drita leviz ne boshtin Y (lart-poshte) në varësi të scrollit
+                const yPos = scrollPercent * window.innerHeight;
+                
+                document.documentElement.style.setProperty('--cursor-x', '50vw'); // Ne mes horizontalisht
+                document.documentElement.style.setProperty('--cursor-y', yPos + 'px');
+            }
+        });
+
+        // Kjo e shfaq pak driten ne celular sapo t'a prekin fillimisht
+        document.addEventListener('touchstart', (e) => {
+            if (window.innerWidth <= 768 && e.touches.length > 0) {
+                document.documentElement.style.setProperty('--cursor-x', e.touches[0].clientX + 'px');
+                document.documentElement.style.setProperty('--cursor-y', e.touches[0].clientY + 'px');
+            }
+        }, {passive: true});
+    </script>
+</body>
+</html>
